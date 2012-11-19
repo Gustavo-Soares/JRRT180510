@@ -1,0 +1,93 @@
+aspect Locking {
+	public ASTNode ASTNode.lockNames(String... endangered) {
+		return lockNames(Arrays.asList(endangered));
+	}
+	public ASTNode ASTNode.lockNames(Collection<String> endangered) {
+		for(int i=0;i<getNumChild();++i)
+			setChild((T)getChild(i).lockNames(endangered), i);
+		return this;
+	}
+	
+	public ASTNode ASTNode.lockMethodNames(String... endangered) {
+		return lockMethodNames(Arrays.asList(endangered));
+	}
+	public ASTNode ASTNode.lockMethodNames(Collection<String> endangered) {
+		for(int i=0;i<getNumChild();++i)
+			setChild((T)getChild(i).lockMethodNames(endangered), i);
+		return this;
+	}
+	
+	public ASTNode ASTNode.lockAllNames() {
+		for(int i=0;i<getNumChild();++i)
+			setChild((T)getChild(i).lockAllNames(), i);
+		return this;
+	}
+	
+	interface LockableName {
+		public ASTNode lock();
+		public Expr unlock(Expr qualifier);
+		public boolean isLocked();
+	}
+	PackageAccess implements LockableName;
+	TypeAccess implements LockableName;
+	VarAccess implements LockableName;
+	MethodAccess implements LockableName;
+	
+	public ASTNode LockableName.lockAllNames() {
+		ASTNode res = lock();
+		if(res == this)
+			return super.lockAllNames();
+		else
+			return res.lockAllNames();
+	}
+	
+	public ASTNode AbstractDot.eliminateLockedNames() {
+		if(getRight() instanceof AbstractDot)
+			rotateLeft();
+		if(getRight() instanceof LockableName && ((LockableName)getRight()).isLocked()) {
+			Expr qual = (Expr)getLeft().eliminateLockedNames();
+			setLeft(qual);
+			Expr res = ((LockableName)getRight()).unlock(qual);
+			replaceWith(res);
+			return res;
+		} else {
+			return super.eliminateLockedNames();	
+		}
+	}
+	
+	// locked copy of a subtree
+	public ASTNode ASTNode.lockedCopy() {
+		ASTNode res = (ASTNode)copy();
+		for(int i=0;i<getNumChildNoTransform();++i) {
+			ASTNode child = getChildNoTransform(i);
+			if(child != null)
+				child = child.lockedCopy();
+			res.setChild(child, i);
+		}
+		return res;
+	}
+	
+	public PackageAccess PackageAccess.lockedCopy() {
+		PackageAccess res = (PackageAccess)super.lockedCopy();
+		res.lock(decl());
+		return res;
+	}
+	
+	public TypeAccess TypeAccess.lockedCopy() {
+		TypeAccess res = (TypeAccess)super.lockedCopy();
+		res.lock(decl());
+		return res;
+	}
+	
+	public VarAccess VarAccess.lockedCopy() {
+		VarAccess res = (VarAccess)super.lockedCopy();
+		res.lock(decl());
+		return res;
+	}
+	
+	public MethodAccess MethodAccess.lockedCopy() {
+		MethodAccess res = (MethodAccess)super.lockedCopy();
+		res.lock(decl());
+		return res;
+	}
+}

@@ -1,0 +1,11 @@
+<project name="RefactoringProject" default="clean" basedir="../">
+
+	<target name="clean">		
+		<echo>Limpando arquivos temporarios</echo>
+		<delete includeemptydirs="true">
+			<fileset dir="${tests.folder}/" includes="temp**/" />			
+		</delete>
+	</target>
+
+	
+</project>

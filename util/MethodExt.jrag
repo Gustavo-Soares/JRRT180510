@@ -1,0 +1,264 @@
+aspect MethodExt {
+	syn boolean MethodDecl.isUnknown() = hostType().isUnknown();
+	
+	public void MethodDecl.makeAbstract() {
+		if(isNative() || isFinal() || isStatic())
+			throw new RefactoringException("cannot make this method abstract");
+		getModifiers().addModifier("abstract");
+		setBlockOpt(new Opt());
+	}
+	
+	// whether this method could by called either dynamically or statically
+	syn lazy boolean MethodDecl.isCallable() = !monoUses().isEmpty() || isDynamicallyCallable();
+	
+	// all statically resolved calls to this method
+	syn lazy Collection<MethodAccess> MethodDecl.monoUses() {
+		Collection<MethodAccess> res = new HashSet<MethodAccess>();
+		for(MethodAccess ma : uses())
+			if(ma.isMonoCall())
+				res.add(ma);
+		return res;
+	}
+	
+	// whether this method could be called through dynamic dispatch
+	syn lazy boolean MethodDecl.isDynamicallyCallable() {
+		if(isStatic() || isPrivate())
+			return false;
+		// not if neither this method nor a method it overrides is ever called
+		if(polyUses().isEmpty())
+			return false;
+		// not if no object of a type that inherits this method is ever constructed
+		for(TypeDecl td : inheritingTypes())
+			if(td.instancesAreConstructed())
+				return true;
+		return false;
+	}
+	
+	// all types that inherit a certain method and do not provide an overriding definition
+	syn lazy Collection<TypeDecl> MethodDecl.inheritingTypes() {
+		if(isStatic() || isPrivate())
+			return Collections.singleton(hostType());
+		Collection<TypeDecl> result = new HashSet<TypeDecl>();
+		LinkedList<TypeDecl> worklist = new LinkedList<TypeDecl>();
+		worklist.add(hostType());
+		while(!worklist.isEmpty()) {
+			TypeDecl td = worklist.pop();
+			result.add(td);
+			for(TypeDecl child : td.childTypes())
+				if(!child.overrides(this))
+					worklist.push(child);
+		}
+		return result;
+	}
+	
+	syn lazy boolean TypeDecl.overrides(MethodDecl md) {
+    	for(Iterator<MethodDecl> iter=localMethodsSignature(md.signature()).iterator(); iter.hasNext();)
+			if(iter.next().overrides(md))
+				return true;
+		return false;
+	}
+	
+	syn boolean MethodDecl.canBeAbstract() = !(isStatic() || isPrivate() || isFinal());
+	
+	// uses of a method, including its substituted and parameterised copies
+	public Collection<MethodAccess> MethodDecl.usesOfAllCopies() {
+		Collection<MethodAccess> res = new HashSet<MethodAccess>(uses());
+		for(MethodDecl md : substitutedCopies())
+			res.addAll(md.uses());
+		return res;
+	}
+	
+	public Collection<MethodAccess> GenericMethodDecl.usesOfAllCopies() {
+		Collection<MethodAccess> res = super.usesOfAllCopies();
+		res.addAll(parUses());
+		return res;
+	}
+	
+	public Collection<MethodDeclSubstituted> MethodDecl.substitutedCopies() {
+		Collection<MethodDeclSubstituted> res = new LinkedList<MethodDeclSubstituted>();
+		if(!hostType().isGenericType())
+			return res;
+		GenericTypeDecl host = (GenericTypeDecl)hostType();
+		for(int i=0;i<host.getNumParTypeDecl();++i) {
+			ParTypeDecl ptd = host.getParTypeDecl(i);
+			for(Object o : ptd.localMethodsSignatureMap().values())
+				if(o instanceof MethodDeclSubstituted && ((MethodDeclSubstituted)o).sourceMethodDecl() == this)
+					res.add((MethodDeclSubstituted)o);
+		}
+		return res;
+	}
+	
+	// all calls that resolve to a parameterized instance of a generic method
+	coll Collection<MethodAccess> GenericMethodDecl.parUses() [new HashSet<MethodAccess>()]
+	                                                          with add root Program;
+	MethodAccess contributes this
+	when decl() instanceof ParMethodDecl
+	to GenericMethodDecl.parUses()
+	for ((ParMethodDecl)decl()).sourceMethodDecl(); 
+	
+	// descendantMethods: inverse of ancestorMethods
+	syn lazy Collection<MethodDecl> TypeDecl.descendantMethods(String sig) = Collections.EMPTY_SET;
+	
+	eq ClassDecl.descendantMethods(String sig) {
+		Collection<MethodDecl> desc = new HashSet<MethodDecl>();
+		for(TypeDecl td : childTypes()) {
+			boolean found = false;
+			for(Iterator<MethodDecl> iter = td.localMethodsSignature(sig).iterator(); iter.hasNext();) {
+				MethodDecl md = iter.next();
+				desc.add(md);
+				found = true;
+			}
+			if(!found)
+				desc.addAll(td.descendantMethods(sig));
+		}
+		return desc;
+	}
+	
+	// the rootdef of a method m is the method m' defined in an ancestor class of m such that m overrides m',
+	// and m' doesn't override anything; m' might be abstract
+	// this is only defined for methods in classes
+	syn lazy MethodDecl MethodDecl.rootdef() {
+		if(isPrivate() || isStatic())
+			return this;
+		if(!hostType().isClassDecl())
+			throw new Error("undefined operation");
+		return hostType().rootdef(signature(), isPackageProtected());
+	}
+	
+	syn lazy MethodDecl TypeDecl.rootdef(String sig, boolean isPkg) = null;
+	eq ClassDecl.rootdef(String sig, boolean isPkg) {
+		MethodDecl md = null;
+		for(Iterator<MethodDecl> iter=localMethodsSignature(sig).iterator(); iter.hasNext();) {
+			MethodDecl md2 = iter.next();
+			if(!md2.isPrivate()) {
+				md = md2;
+				if(md.isPublic() || md.isProtected())
+					isPkg = false;
+			}
+		}
+		if(hasSuperclass() && (!isPkg || superclass().packageName().equals(this.packageName()))) {
+			MethodDecl md2 = superclass().rootdef(sig, isPkg);
+			if(md2 != null)
+				return md2;
+		}
+		return md;
+	}
+	
+	// relatives(m) = {m' | exists m''. m'' <: m /\ m'' <: m'}
+	// start at rootdef, then walk down the class hierarchy, at every class collect local methods of the
+	// same signature as well as methods inherited from interfaces
+	syn lazy Collection<MethodDecl> MethodDecl.relatives() {
+		if(isPrivate() || isStatic())
+			return Collections.singleton(this);
+		Collection<MethodDecl> res = new HashSet<MethodDecl>();
+		if(hostType().isInterfaceDecl()) {
+			LinkedList<InterfaceDecl> worklist = new LinkedList<InterfaceDecl>();
+			worklist.add((InterfaceDecl)hostType());
+			while(!worklist.isEmpty()) {
+				InterfaceDecl iface = worklist.pop();
+				for(Iterator<MethodDecl> iter=iface.localMethodsSignature(signature()).iterator();iter.hasNext();)
+					res.add(iter.next());
+				for(TypeDecl child : iface.childTypes()) {
+					if(child.isInterfaceDecl()) {
+						worklist.push((InterfaceDecl)child);
+					} else {
+						ClassDecl cd = (ClassDecl)child;
+						for(MethodDecl md : (Collection<MethodDecl>)cd.memberMethods(name()))
+							if(md.signature().equals(this.signature()))
+								((ClassDecl)md.rootdef().hostType()).collectRelatives(this, res);
+					}
+				}
+			}
+		} else {
+			((ClassDecl)rootdef().hostType()).collectRelatives(this, res);
+		}
+		return res;
+	}
+	
+	public void ClassDecl.collectRelatives(MethodDecl md, Collection<MethodDecl> res) {
+		boolean isPackageProtected = false;
+		String sig = md.signature();
+		for(Iterator<MethodDecl> iter=localMethodsSignature(sig).iterator(); iter.hasNext();) {
+			md = iter.next();
+			if(md.isPackageProtected())
+				isPackageProtected = true;
+			res.add(md);
+		}
+		for(Iterator<MethodDecl>iter=interfacesMethodsSignature(sig).iterator(); iter.hasNext();)
+			res.add(iter.next());
+		for(TypeDecl child : childTypes()) {
+			if(isPackageProtected && !child.packageName().equals(this.packageName()))
+				continue;
+			md = ((ClassDecl)child).superclass().memberMethod(md);
+			((ClassDecl)child).collectRelatives(md, res);
+		}
+	}
+
+	// copy of method with locked names, but empty body
+	public MethodDecl MethodDecl.lockedCopyWithEmptyBody() {
+		Modifiers mods = (Modifiers)getModifiers().fullCopy();
+		Access rettype = type().createLockedAccess();
+		String name = name();
+		List<ParameterDeclaration> parms = new List<ParameterDeclaration>();
+		for(ParameterDeclaration pd : getParameters())
+			parms.add(pd.lockedCopy());
+		List<Access> exns = new List<Access>();
+		for(Access exn : getExceptions())
+			exns.add(exn.type().createLockedAccess());
+		return new MethodDecl(mods, rettype, name, parms, exns, new Opt<Block>());
+	}
+	
+	public MethodDecl GenericMethodDecl.lockedCopyWithEmptyBody() {
+		Modifiers mods = (Modifiers)getModifiers().fullCopy();
+		Access rettype = type().createLockedAccess();
+		String name = name();
+		List<ParameterDeclaration> parms = new List<ParameterDeclaration>();
+		for(ParameterDeclaration pd : getParameters())
+			parms.add(pd.lockedCopy());
+		List<Access> exns = new List<Access>();
+		for(Access exn : getExceptions())
+			exns.add(exn.type().createLockedAccess());
+		Map<TypeVariable, TypeVariable> tvdict = new HashMap<TypeVariable, TypeVariable>();
+		getTypeParameters().lockAllNames();
+		List<TypeVariable> typeparms = getTypeParameters();
+		setTypeParameterList((List<TypeVariable>)typeparms.fullCopy());
+		for(int i=0;i<getNumTypeParameter();++i)
+			tvdict.put(typeparms.getChild(i), getTypeParameter(i));
+		translateTypeVars(tvdict);
+		return new GenericMethodDecl(mods, rettype, name, parms, exns, new Opt<Block>(), typeparms);
+	}
+	
+	public MethodDecl AnnotationMethodDecl.lockedCopyWithEmptyBody() { throw new UnsupportedOperationException(); }
+	public MethodDecl BridgeMethodDecl.lockedCopyWithEmptyBody() { throw new UnsupportedOperationException(); }
+	public MethodDecl RawMethodDecl.lockedCopyWithEmptyBody() { throw new UnsupportedOperationException(); }
+	
+	
+	// whether this method could be called from outside itself
+	syn lazy boolean MethodDecl.isCallableFromOutside() {
+		if(isDynamicallyCallable()) {
+			for(MethodAccess ma : polyUses())
+				if(!ma.isDescendantTo(getBlock()))
+					return true;
+		} else {
+			for(MethodAccess ma : monoUses())
+				if(!ma.isDescendantTo(getBlock()))
+					return true;
+		}
+		return false;
+	}
+	
+	// whether this method is referenced from outside itself
+	syn lazy boolean MethodDecl.isReferencedFromOutside() {
+		for(MethodAccess ma : uses())
+			if(!ma.isDescendantTo(getBlock()))
+				return true;
+		return false;
+	}
+	
+	protected static boolean ASTNode.allAbstract(Collection<MethodDecl> mds) {
+		for(MethodDecl md : mds)
+			if(!md.isAbstract())
+				return false;
+		return true;
+	}
+}

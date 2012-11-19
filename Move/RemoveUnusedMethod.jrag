@@ -1,0 +1,23 @@
+/* The Remove Unused Method microrefactoring removes a method if it can never be invoked and
+ * is never statically bound to, and makes it abstract if it may be statically bound to but
+ * can actually never be invoked. */
+aspect RemoveUnusedMethod {
+	public void MethodDecl.removeUnused(boolean leaveAbstract) {
+		if(isCallableFromOutside())
+			throw new RefactoringException("method is still used");
+		if(leaveAbstract || isReferencedFromOutside()) {
+			if(isAbstract())
+				return;
+			if(!canBeAbstract())
+				throw new RefactoringException("cannot make method abstract");
+			for(TypeDecl td : inheritingTypes())
+				td.makeAbstract();
+			setBlockOpt(new Opt());
+			getModifiers().addModifier("abstract");
+		} else {
+			if(!overrides().isEmpty() && allAbstract(overrides()))
+				hostType().makeAbstract();
+			hostType().removeBodyDecl(this);
+		}
+	}
+}

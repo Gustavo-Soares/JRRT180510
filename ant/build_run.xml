@@ -1,0 +1,89 @@
+<project name="RefactoringProject" default="run_tests" basedir="../">
+	
+	<property file="ant/build.properties"/> 
+
+	<path id="classpath">
+		<fileset dir="lib" includes="*.jar" />
+	</path>
+	
+	<path id="cobertura.classpath">
+			<fileset dir="lib">
+				<include name="cobertura.jar" />
+				<include name="**/*.jar" />
+
+			</fileset>
+		</path>
+	
+	<taskdef classpathref="cobertura.classpath" resource="tasks.properties" />
+
+	<path id="classpath_source">
+		<fileset dir="${source}/" includes="${lib}/*.jar" />
+	</path>
+
+	<path id="classpath_target">
+		<fileset dir="${target}" includes="${lib}/*.jar" />
+	</path>
+
+
+	<target name="clean">
+		<delete file="cobertura.ser" />
+		<delete includeemptydirs="false">
+			<fileset dir="${tests.folder}/" includes="**/*" />
+			<fileset dir="${tests.folder}/bin" includes="**/*" />
+			<fileset dir="${tests.folder}/source" includes="**/*" />
+			<fileset dir="${tests.folder}/target" includes="**/*" />
+			<fileset dir="${tests.folder}/coverage" includes="**/*" />
+		</delete>
+	</target>	
+						
+	
+	<target name="compileSource" depends="clean">
+				<echo>Compiling the analyzer</echo>
+					<javac  fork="yes" memorymaximumsize="512m" debug="on" srcdir="${source}" destdir="${source}">
+						<classpath refid="classpath" />
+					</javac>
+			</target>
+
+		<target name="compileTarget" depends="compileSource">
+					<echo>Compiling the analyzer</echo>
+						<javac  fork="yes" memorymaximumsize="512m" debug="on" srcdir="${target}" destdir="${target}">
+							<classpath refid="classpath" />
+						</javac>
+				</target>		
+	
+	
+	<target name="run_tests" depends="compileTarget">
+		<echo>Running JUnit to test the "source"</echo>
+	<junit printsummary="yes" haltonfailure="yes" fork="true" maxmemory="512m">
+			
+			<classpath>				
+				<fileset dir="lib">
+					<include name="**/*.jar" />
+				</fileset>
+				<pathelement location="${source}/${bin}" />				
+			</classpath>
+			<formatter type="xml" />
+			<batchtest todir="${tests.folder}/source" haltonfailure="no">
+				<fileset dir="${source}/${bin}">
+					<include name="*Test.class" />
+				</fileset>
+			</batchtest>
+		</junit>
+		<echo>Running JUnit to test the "target"</echo>
+		<junit printsummary="yes" haltonfailure="yes" fork="true" maxmemory="512m">			
+			<classpath location="${target}/${bin}" />			
+			<classpath>				
+							<fileset dir="lib">
+								<include name="**/*.jar" />
+							</fileset>
+							<pathelement location="${source}/${bin}" />				
+						</classpath>
+			<formatter type="xml" />
+			<batchtest todir="${tests.folder}/target" haltonfailure="no">
+				<fileset dir="${target}/${bin}">
+					<include name="*Test.class" />
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
+</project>

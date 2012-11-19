@@ -1,0 +1,31 @@
+aspect LocalClassToMemberClass {
+	public MemberTypeDecl LocalClassDeclStmt.promoteToMemberClass(boolean makePublic) {
+		Program root = programRoot();
+		ClassDecl cd = getClassDecl();
+		// close over accesses to local variables
+		cd = closeOverTypeVariables();
+		closeOverLocalVariables();
+		if(!cd.enclosingType().isLocalClass() && !cd.enclosingType().isAnonymous())
+			cd.setVisibility(makePublic ? VIS_PUBLIC : VIS_PRIVATE);
+		if(cd.inStaticContext())
+			cd.getModifiers().addModifier("static");
+		// lock names
+		root.lockNames(cd.name());
+		cd.lockAllNames();
+		// move
+		MemberTypeDecl mtd = cd.enclosingType().insertUnusedType(cd, 0);
+		enclosingBlock().removeStmt(this);
+		return mtd;
+	}
+	
+	public MemberTypeDecl LocalClassDeclStmt.doPromoteToMemberClass(boolean makePublic) {
+		Program root = programRoot();
+		MemberTypeDecl mtd = promoteToMemberClass(makePublic);
+		root.eliminate(FRESH_VARIABLES, LOCKED_NAMES);
+		return mtd;
+	}
+	
+	public MemberTypeDecl LocalClassDeclStmt.doPromoteToMemberClass() {
+		return doPromoteToMemberClass(false);
+	}
+}

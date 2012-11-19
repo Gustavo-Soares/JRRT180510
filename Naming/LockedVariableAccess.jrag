@@ -1,0 +1,138 @@
+aspect LockedVariableAccess {
+	/* A locked variable access is a variable access that does not obey the normal variable lookup
+	 * rules, but instead immediately binds to its target. */
+	private Variable VarAccess.targetVariable = null;
+	
+	public VarAccess Variable.createLockedAccess() {
+		VarAccess va = new VarAccess(this.name());
+		va.lock(this);
+		return va;
+	}
+	
+	refine VariableScopePropagation eq VarAccess.decls() = targetVariable == null ? refined() : SimpleSet.emptySet.add(targetVariable);
+	
+	refine PrettyPrint public void VarAccess.toString(StringBuffer s) {
+		if(targetVariable == null) {
+			refined(s);
+		} else {
+			s.append("[[");
+			refined(s);
+			s.append("]]");
+		}
+	}
+	
+	// introducing locked variable accesses
+	public ASTNode VarAccess.lockNames(Collection<String> endangered) {
+		if(endangered.contains(name()))
+			return lock();
+		else
+			return super.lockNames(endangered);
+	}
+	
+	public ASTNode VarAccess.lock() {
+		return targetVariable == null ? lock(decl()) : this;
+	}
+	
+	public ASTNode VarAccess.lock(Variable target) {
+		assert target != null;
+		targetVariable = target;
+		return this;
+	}
+	
+	public boolean Variable.isSubstituted() { return false; }
+	public boolean FieldDeclarationSubstituted.isSubstituted() { return true; }
+	public boolean ParameterDeclarationSubstituted.isSubstituted() { return true; }
+	public boolean VariableArityParameterDeclarationSubstituted.isSubstituted() { return true; }
+	
+	public boolean VarAccess.isLocked() { return targetVariable != null; }
+	
+	// eliminating locked variable accesses
+	inh TypeDecl VarAccess.enclosingType();
+	public Access VarAccess.eliminateLockedNames() { return targetVariable == null ? this : unlock(null); }
+	public Access VarAccess.unlock(Expr qual) {
+		Variable target = targetVariable.refresh();
+		targetVariable = null;
+		flushCache();
+		if(fromSource())
+			setID(target.name());
+		if(decl().sameSourceDeclAs(target)) {
+			return qual == null ? this : qual.qualifiesAccess(this);
+		} else if(fromSource()) {
+			if((qual == null ? inStaticContext() : qual.staticContextQualifier()) && !target.isStatic())
+				throw new RefactoringException("cannot access instance variable in static context");
+			SymbolicVarAccess acc = accessVariable(target);
+			if(acc.isUnknownVarAccess()) {
+				if((qual == null || qual.isPure()) && target.isStatic()) {
+					TypeDecl host = target.hostType();
+					if(host.accessibleFrom(hostType()) && mayAccess((FieldDeclaration)target))
+						return host.createLockedAccess().qualifiesAccess(this);
+				} else if(qual != null && (qual.isThisAccess() || qual.isSuperAccess())) {
+					acc = parentDot().accessVariable(target);
+					if(acc != null)
+						return acc.asAccess(null, enclosingType());
+				}
+				throw new RefactoringException("cannot access variable "+target.name());
+			}
+			return acc.asAccess(qual, enclosingType());
+		} else {
+			throw new RefactoringException("cannot access variable "+target.name());
+		}
+	}
+	
+	// eliminating locked variable accesses
+	public Access SymbolicFieldAccess.asAccess(Expr qualifier, TypeDecl enclosing) {
+		if(target.isStatic()) {
+			return target.hostType().createLockedAccess().qualifiesAccess(new VarAccess(target.name()));
+		} else {
+			if(directlyVisible) {
+				if(qualifier != null)
+					return qualifier.qualifiesAccess(new VarAccess(target.name()));
+				return new VarAccess(target.name());
+			} else {
+				VarAccess va = new VarAccess(target.name());
+				if(qualifier == null) {
+					if(source.sameSourceDeclAs(bend)) {
+						if(bend.equals(enclosing)) {                                             // this.f
+							return new ThisAccess("this").qualifiesAccess(va);
+						} else {                                                                       // B.this.f
+							return bend.createLockedAccess().qualifiesAccess(
+									new ThisAccess("this").qualifiesAccess(va));
+						}
+					} else if(bend.isClassDecl() && source.equals(((ClassDecl)bend).superclass())) {
+						if(bend.equals(enclosing)) {                                             // super.f
+							return new SuperAccess("super").qualifiesAccess(va);
+						} else {
+							return bend.createLockedAccess().qualifiesAccess(                               // B.super.f
+									new SuperAccess("super").qualifiesAccess(va));
+						}
+					} else {
+						if(bend.equals(enclosing)) {
+							return new ParExpr(new CastExpr(source.createLockedAccess(),                    // ((S)this).f 
+									new ThisAccess("this"))).qualifiesAccess(va);
+						} else {
+							return new ParExpr(new CastExpr(source.createLockedAccess(),                    // ((S)B.this).f
+									bend.createLockedAccess().qualifiesAccess(
+											new ThisAccess("this")))).qualifiesAccess(va);
+						}
+					}
+				} else {
+					if(!bend.equals(qualifier.type()))
+						throw new RefactoringException("cannot access variable");
+					if(source.equals(qualifier.type()))
+						return qualifier.qualifiesAccess(va);
+					return new ParExpr(new CastExpr(source.createLockedAccess(), qualifier)).qualifiesAccess(va);
+				}
+			}
+		}
+	}
+	
+	public Access UnknownVarAccess.asAccess(Expr qualifier, TypeDecl enclosing) {
+		throw new RefactoringException("cannot access variable");
+	}
+	
+	public Access LocalVariable.asAccess(Expr qualifier, TypeDecl enclosing) {
+		if(qualifier != null)
+			throw new RefactoringException("cannot qualify access to local variable");
+		return new VarAccess(name());
+	}
+}

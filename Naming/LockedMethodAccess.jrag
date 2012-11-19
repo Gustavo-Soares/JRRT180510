@@ -1,0 +1,283 @@
+aspect LockedMethodAccess {
+	/* A locked method access is a method access that does not obey the normal method lookup
+	 * rules, but instead immediately binds to its target. */
+	private SavedMethodDecl MethodAccess.targetMethod = null;
+	
+	public MethodAccess.MethodAccess(MethodDecl target, List<Expr> args) {
+		this(target.name(), args);
+		targetMethod = target.save();
+	}
+	
+	public MethodAccess MethodDecl.createLockedAccess(List<Expr> args) {
+		return new MethodAccess(this, args);
+	}
+	
+	/* If we just store the method declaration an access should bind to, we get into trouble with
+	 * ParMethodDecls: we might store a reference to some ParMethodDecl, then somebody flushes the
+	 * caches, and a new ParMethodDecl will be created the next time we ask for it. Then inherited
+	 * attributes won't work anymore, and things generally become unpleasant.
+	 * 
+	 * So we store a SavedMethodDecl instead: this is either a wrapper around a regular MethodDecl,
+	 * or it represents a ParMethodDecl by its genericMethodDecl() and its list of arguments.*/
+	class SavedMethodDecl {
+		private MethodDecl md;
+		
+		public SavedMethodDecl(MethodDecl md) {
+			this.md = md;
+		}
+		
+		public MethodDecl getDecl() {
+			return md;
+		}
+	}
+	
+	class SavedParMethodDecl extends SavedMethodDecl {
+		private ArrayList<TypeDecl> parms;
+		public SavedParMethodDecl(ParMethodDecl pmd) {
+			super(pmd.genericMethodDecl());
+			parms = new ArrayList<TypeDecl>();
+			for(Access acc : pmd.getTypeArguments())
+				parms.add(acc.type());
+		}
+		
+		public MethodDecl getDecl() {
+			ArrayList<TypeDecl> parmtypes = new ArrayList<TypeDecl>();
+			for(TypeDecl std : parms)
+				parmtypes.add(std.refresh());
+			return ((GenericMethodDecl)super.getDecl()).lookupParMethodDecl(parmtypes);
+		}
+	}
+	
+	class SavedMethodDeclSubstituted extends SavedMethodDecl {
+		private TypeDecl host;
+
+		public SavedMethodDeclSubstituted(MethodDeclSubstituted mds) {
+			super(mds.getOriginal());
+			host = mds.hostType();
+		}
+		
+		public MethodDecl getDecl() {
+			TypeDecl host = this.host.refresh();
+			MethodDecl md = super.getDecl();
+			host.localMethodsSignatureMap();
+			for(BodyDecl bd : host.getBodyDecls())
+				if(bd instanceof MethodDeclSubstituted && ((MethodDeclSubstituted)bd).getOriginal() == md)
+					return (MethodDecl)bd;
+			throw new Error("no such method");
+		}
+	}
+	
+	public SavedMethodDecl MethodDecl.save() { return new SavedMethodDecl(this); }
+	public SavedParMethodDecl ParMethodDecl.save() { return new SavedParMethodDecl(this); }
+	public SavedMethodDeclSubstituted MethodDeclSubstituted.save() { return new SavedMethodDeclSubstituted(this); }
+	
+	refine LookupMethod eq MethodAccess.decls() = targetMethod == null ? refined() : targetMethod.getDecl();
+	
+	refine PrettyPrint public void MethodAccess.toString(StringBuffer s) {
+		if(targetMethod == null) {
+			refined(s);
+		} else {
+			s.append("[[");
+			refined(s);
+			s.append("]]");
+		}
+	}
+	
+	// introducing locked method accesses
+	public ASTNode MethodAccess.lockMethodNames(Collection<String> endangered) {
+		if(endangered.contains(name()))
+			lock();
+		return super.lockMethodNames(endangered);
+	}
+	
+	public ASTNode MethodAccess.lock() {
+		return targetMethod == null ? lock(decl()) : this;
+	}
+	
+	public ASTNode MethodAccess.lock(MethodDecl md) {
+		assert md != null && !md.isUnknown();
+		MethodDecl target = md.isSubstituted() ? md.sourceMethodDecl() : md;
+		targetMethod = target.save();
+		return this;
+	}
+	
+	public boolean MethodDecl.isSubstituted() { return false; }
+	public boolean MethodDeclSubstituted.isSubstituted() { return false; }
+	
+	public boolean MethodAccess.isLocked() { return targetMethod != null; }
+	
+	// eliminating locked method accesses
+	inh TypeDecl MethodAccess.enclosingType();
+	public Access MethodAccess.eliminateLockedNames() {
+		return targetMethod == null ? this : unlock(null);
+	}
+	
+	public Access MethodAccess.unlock(Expr qual) {
+		MethodDecl target = targetMethod.getDecl();
+		targetMethod = null;
+		flushCache();
+		if(fromSource())
+			setID(target.name());
+		if(decl().sameSourceDeclAs(target)) {
+			return qual == null ? this : qual.qualifiesAccess(this);
+		} else if(fromSource()) {
+			if((qual == null ? inStaticContext() : qual.staticContextQualifier()) && !target.isStatic())
+				throw new RefactoringException("cannot access instance method in static context");
+			MethodAccessInfo acc = accessMethod(target);
+			if(acc == null) {
+				if((qual == null || qual.isPure()) && target.isStatic()) {
+					TypeDecl host = target.hostType();
+					// since the target is static, we can access it through the raw type
+					if(host.isGenericType())
+						host = ((GenericTypeDecl)host).rawType();
+					if(host.accessibleFrom(hostType()) && target.accessibleFrom(hostType()))
+						return host.createLockedAccess().qualifiesAccess(this);
+				} else if(qual != null && (qual.isThisAccess() || qual.isSuperAccess())) {
+					acc = parentDot().accessMethod(target);
+					if(acc != null)
+						return acc.eliminate(null, enclosingType(), inStaticContext(), getArgs());
+				}
+				throw new RefactoringException("cannot access method "+target.name());
+			}
+			Access res = acc.eliminate(qual, enclosingType(), inStaticContext(), getArgs());
+			if(res == null)
+				throw new RefactoringException("cannot access method "+target.name());
+			return res;
+		} else {
+			throw new RefactoringException("cannot access method "+target.name());
+		}
+	}
+	
+	// eliminating locked method accesses
+	public Access MethodAccessInfo.eliminate(Expr qualifier, TypeDecl enclosing, boolean inStaticCtxt, List<Expr> args) {
+		if(qualifier == null)
+			return eliminate(enclosing, inStaticCtxt, args);
+		else
+			return eliminateQualified(qualifier, enclosing, inStaticCtxt, args);
+	}
+	
+	public Access MethodAccessInfo.eliminate(TypeDecl enclosing, boolean inStaticCtxt, List<Expr> args) {
+		if(!directlyVisible) {
+			if(target.isStatic())
+				return computeStaticAccess(enclosing, args);
+			if(inStaticCtxt)
+				return null;
+			if(source == bend) {
+				return computeThisAccess(enclosing, args);
+			} else if(bend instanceof ClassDecl && source == ((ClassDecl)bend).superclass()) {
+				return computeSuperAccess(enclosing, args);
+			} else {
+				return null;
+			}
+		} else {
+			return constructAccess(args);
+		}
+	}
+	
+	public Access MethodAccessInfo.computeStaticAccess(TypeDecl enclosing, List<Expr> args) {
+		return source.createLockedAccess().qualifiesAccess(constructAccess(args));
+	}
+	
+	public Access MethodAccessInfo.computeThisAccess(TypeDecl enclosing, List<Expr> args) {
+		MethodAccess ma = constructAccess(args);
+		if(source == enclosing)
+			return ma;
+		else
+			return bend.createLockedAccess().qualifiesAccess(new ThisAccess("this").qualifiesAccess(ma));
+	}
+	
+	public Access MethodAccessInfo.computeSuperAccess(TypeDecl enclosing, List<Expr> args) {
+		MethodAccess ma = constructAccess(args);
+		if(bend == enclosing)
+			return new SuperAccess("super").qualifiesAccess(ma);
+		else
+			return bend.createLockedAccess().qualifiesAccess(new SuperAccess("super").qualifiesAccess(ma));
+	}
+
+	protected MethodAccess MethodAccessInfo.constructAccess(List<Expr> args) {
+		// check if any of the competitors is more specific than the target for
+		// this argument list; then we need casts
+		for(MethodDecl cand : competitors)
+			if(cand.applicableTo(args) && cand.moreSpecificThan(target))
+				return new MethodAccess(target.name(), insertCasts(args));
+		return new MethodAccess(target.name(), args);
+	}
+	
+	protected List<Expr> MethodAccessInfo.insertCasts(List<Expr> args) {
+		List<Expr> new_args = new List<Expr>();
+		for(int i=0;i<target.getNumParameter();++i) {
+			ParameterDeclaration parm = target.getParameter(i);
+			Expr arg = args.getChild(i);
+			TypeDecl tp = parm.type();
+			if(parm.isVariableArity() && !arg.type().methodInvocationConversionTo(tp)) {
+				List<Expr> varargs = new List<Expr>();
+				while(i<args.getNumChild())
+					varargs.add(args.getChild(i++));
+				new_args.addChild(new ArrayCreationExpr(tp.createLockedAccess(), new Opt(new ArrayInit(varargs))));
+			} else {
+				new_args.addChild(new CastExpr(tp.createLockedAccess(), arg));
+			}
+		}
+		return new_args;
+	}
+
+	public Access MethodAccessInfo.eliminateQualified(Expr qualifier, TypeDecl enclosing,
+			boolean inStaticCtxt, List<Expr> args) {
+		MethodAccess ma = constructAccess(args);
+		if(!directlyVisible) {
+			if(!target.isStatic())
+				return null;
+			if(inStaticCtxt)
+				if(qualifier.isTypeAccess() && qualifier.type().sameSourceDeclAs(source))
+					return qualifier.qualifiesAccess(ma);
+				else
+					return null;
+			if(source == bend && source.sameSourceDeclAs(qualifier.type()))
+				return qualifier.qualifiesAccess(ma);
+			else if(!qualifier.isTypeAccess() && qualifier.type().sameSourceDeclAs(bend))
+				return new ParExpr(new CastExpr(source.createLockedAccess(), qualifier)).qualifiesAccess(ma);
+			return null;
+		} else {
+			if(!target.accessibleFrom(enclosing))
+				throw new RefactoringException("method not accessible");
+			return qualifier.qualifiesAccess(ma);
+		}
+	}
+	
+	/* A special case are element-value pairs in annotations: they also refer to methods, so we have to lock them;
+	 * but they are much easier to adjust. */
+	private MethodDecl ElementValuePair.targetMethod = null;
+
+	public ASTNode ElementValuePair.lockMethodNames(Collection<String> endangered) {
+		if(endangered.contains(getName()))
+			return lock();
+		else
+			return super.lockMethodNames(endangered);		
+	}
+	
+	public ASTNode ElementValuePair.lock() {
+	    Iterator<MethodDecl> iter = enclosingAnnotationDecl().memberMethods(getName()).iterator();
+	    if(iter.hasNext())
+	    	targetMethod = iter.next();
+	    return this;
+	}
+	
+	public ASTNode ElementValuePair.eliminateLockedNames() {
+		if(targetMethod != null) {
+			MethodDecl target = targetMethod;
+			targetMethod = null;
+			setName(target.name());
+		    Iterator<MethodDecl> iter = enclosingAnnotationDecl().memberMethods(getName()).iterator();
+		    if(!iter.hasNext() || iter.next() != target)
+		    	throw new RefactoringException("cannot unlock element-value pair");
+		}
+		return this;
+	}
+	
+	/* NOTE: Locked method accesses only fix the static declaration a method resolves to; they do not consider
+	 *       possible polymorphic dispatch. One could think that it would be safer to actually compute the set
+	 *       of all targets a call could possibly resolve to, and fix that whole set. This would not actually
+	 *       be an improvement, however, since this set would be an overapproximation, and we still could not
+	 *       guarantee invariance of run-time dispatch. Instead, we have to guard against changes in dispatch
+	 *       behaviour on a refactoring-specific basis. */
+}

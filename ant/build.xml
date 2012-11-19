@@ -1,0 +1,156 @@
+<project name="RefactoringProject" default="coverage" basedir="../">
+
+	<property file="ant/build.properties" />
+
+	<path id="classpath">
+		<fileset dir="lib" includes="*.jar" />
+	</path>
+
+	<path id="cobertura.classpath">
+		<fileset dir="lib">
+			<include name="cobertura.jar" />
+			<include name="**/*.jar" />
+
+		</fileset>
+	</path>
+
+	<taskdef classpathref="cobertura.classpath" resource="tasks.properties" />
+
+	<path id="classpath_source">
+		<fileset dir="${source}/" includes="${lib}/*.jar" />
+	</path>
+
+	<path id="classpath_target">
+		<fileset dir="${target}" includes="${lib}/*.jar" />
+	</path>
+
+
+	<target name="clean">
+		<delete file="cobertura.ser" />
+		<delete includeemptydirs="false">
+			<fileset dir="${tests.folder}/" includes="**/*" />
+			<fileset dir="${tests.folder}/bin" includes="**/*" />
+			<fileset dir="${tests.folder}/source" includes="**/*" />
+			<fileset dir="${tests.folder}/target" includes="**/*" />
+			<fileset dir="${tests.folder}/coverage" includes="**/*" />
+		</delete>
+	</target>
+
+	<target name="compileSource" depends="clean">
+		<echo>Compiling the analyzer</echo>
+		<javac fork="yes" memorymaximumsize="512m" debug="on" srcdir="${source}" destdir="${source}">
+			<classpath refid="classpath" />
+		</javac>
+	</target>
+
+	<target name="compileTarget" depends="compileSource">
+		<echo>Compiling the analyzer</echo>
+		<javac fork="yes" memorymaximumsize="512m" debug="on" srcdir="${target}" destdir="${target}">
+			<classpath refid="classpath" />
+		</javac>
+	</target>
+
+
+	<target name="analyze_target" depends="compileTarget">
+		<echo>
+		            Analyzing target methods
+		        </echo>
+		<java classname="br.edu.ufcg.saferefactor.core.TargetAnalyzer" fork="true" maxmemory="256m">
+			<arg value="${source}" />
+			<arg value="${target}" />
+			<arg value="${bin}" />
+			<arg value="${src}" />
+			<arg value="${lib}" />
+			<arg value="${timeout}" />
+			<classpath refid="classpath_source" />
+			<classpath refid="classpath" />
+			<classpath>
+				<pathelement path="${target}/${bin}" />
+			</classpath>
+		</java>
+	</target>
+
+	<target name="generate_tests" depends="analyze_target">
+		<echo>
+            Generating tests
+        </echo>
+		<java classname="br.edu.ufcg.saferefactor.core.Saferefactor" fork="false" maxmemory="256m">
+			<arg value="${source}" />
+			<arg value="${target}" />
+			<arg value="${bin}" />
+			<arg value="${src}" />
+			<arg value="${lib}" />
+			<arg value="${timeout}" />
+			<classpath refid="classpath_source" />
+			<classpath refid="classpath" />
+			<classpath>
+				<pathelement path="${source}/${bin}" />
+			</classpath>
+		</java>
+	</target>
+
+	<target name="compile_tests" depends="generate_tests">
+		<echo>Compiling the tests</echo>
+		<javac fork="yes" memorymaximumsize="512m" includes="*.java" debug="on" srcdir="${tests.folder}/" destdir="${tests.folder}/bin">
+			<classpath>
+				<fileset dir="${source}/${lib}">
+					<include name="**/*.jar" />
+				</fileset>
+				<fileset dir="lib">
+					<include name="**/*.jar" />
+				</fileset>
+				<pathelement location="${source}/${bin}" />
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="instrument" depends="compile_tests">
+
+		<cobertura-instrument todir="${target}/coverage">
+			<ignore regex="org.apache.log4j.*" />
+			<fileset dir="${target}/${bin}">
+				<include name="**/*.class" />
+			</fileset>
+		</cobertura-instrument>
+	</target>
+
+	<target name="run_tests" depends="instrument">
+		<echo>Running JUnit to test the "source"</echo>
+		<junit printsummary="yes" haltonfailure="yes" fork="true" maxmemory="512m">
+
+			<classpath>
+				<fileset dir="${source}/${lib}">
+					<include name="**/*.jar" />
+				</fileset>
+				<fileset dir="lib">
+					<include name="**/*.jar" />
+				</fileset>
+				<pathelement location="${source}/${bin}" />
+				<pathelement location="${tests.folder}/bin" />
+			</classpath>
+			<formatter type="xml" />
+			<batchtest todir="${tests.folder}/source" haltonfailure="no">
+				<fileset dir="${tests.folder}/bin">
+					<include name="*Test.class" />
+				</fileset>
+			</batchtest>
+		</junit>
+		<echo>Running JUnit to test the "target"</echo>
+		<junit printsummary="yes" haltonfailure="yes" fork="true" maxmemory="512m">
+			<sysproperty key="net.sourceforge.cobertura.datafile" file="cobertura.ser" />
+			<classpath location="${target}/coverage" />
+			<classpath location="${target}/${bin}" />
+			<classpath location="${tests.folder}/bin" />
+			<classpath refid="cobertura.classpath" />
+			<formatter type="xml" />
+			<batchtest todir="${tests.folder}/target" haltonfailure="no">
+				<fileset dir="${tests.folder}/bin">
+					<include name="*Test.class" />
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
+	<target name="coverage" depends="run_tests">
+		<cobertura-report format="xml" srcdir="${target}/${src}" destdir="${tests.folder}/coverage" />
+	</target>
+</project>

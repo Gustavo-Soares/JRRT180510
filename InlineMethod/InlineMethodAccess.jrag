@@ -1,0 +1,31 @@
+aspect InlineMethodAccess {
+	
+	public AnonymousMethod MethodAccess.inlineToAnonymousMethod() {
+		MethodDecl target = getUniqueTarget();
+		if(target == null)
+			throw new RefactoringException("cannot inline ambiguous method call");
+		if(!target.hasBlock() || !target.fromSource())
+			throw new RefactoringException("cannot inline call to method without body");
+		MethodDecl target_cp = target.fullCopy();
+		target.unfoldSynchronized();
+		target.lockAllNames();
+		AnonymousMethod anon = target.asAnonymousMethod();
+		bundleQualifier();
+		if(isRightChildOfDot()) {
+			Expr qual = qualifier();
+			if(qual.isSuperAccess())
+				qual = qual.convertSuperToThis();
+			if(!(qual instanceof ThisAccess)) {
+				qual.lockAllNames();
+				anon.setBlock(new Block(new List<Stmt>().add(new WithStmt((Access)qual, anon.getBlock()))));
+			}
+			parentDot().replaceWith(anon);
+		} else {
+			replaceWith(anon);
+		}
+		target.replaceWith(target_cp);
+		anon.setArgList(getArgList());
+		target_cp.hostType().flushCaches();
+		return anon;
+	}
+}

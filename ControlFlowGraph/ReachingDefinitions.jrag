@@ -1,0 +1,111 @@
+aspect ReachingDefinitions {
+	interface Definition { }
+	Access implements Definition;
+	ParameterDeclaration implements Definition;
+	VariableDeclaration implements Definition;
+	MethodAccess implements Definition;
+	FieldDeclaration implements Definition;
+	EntryStmt implements Definition;
+	
+	public SmallSet<Definition> Access.reachingDefinitions() {
+		Location l = getLocation();
+		if(!isSource() || l == null)
+			return SmallSet.<Definition>empty();
+		// we don't want the node to be its own reaching definition
+		SmallSet<Definition> res = SmallSet.<Definition>empty();
+		for(CFGNode p : pred())
+			res = res.union(p.reachingDefinitionsFor(l));
+		return res;
+	}
+	
+	public SmallSet<Definition> VarAccess.reachingDefinitions() {
+		if(decl().isField()) {
+			FieldDeclaration fd = (FieldDeclaration)decl();
+			if(fd.isConstant() && fd.hasInit())
+				return SmallSet.<Definition>singleton(fd);
+		}
+		return super.reachingDefinitions();
+	}
+	
+	coll SmallSet<Access> Definition.reachedUses() [SmallSet.mutable()] with add root TypeDecl;
+	Access contributes this to Definition.reachedUses() for each reachingDefinitions();
+	
+	// for a write, returns the set of writes to the same variable preceding it in the CFG
+	public SmallSet<Definition> Access.writeDeps() {
+		Location l = getLocation();
+		if(!isDest() || l == null)
+			return SmallSet.<Definition>empty();
+		// we don't want the node to write-depend on itself
+		SmallSet<Definition> res = SmallSet.<Definition>empty();
+		for(CFGNode p : pred())
+			res = res.union(p.reachingDefinitionsFor(l));
+		return res;
+	}
+	
+	syn lazy SmallSet<Definition> CFGNode.reachingDefinitionsFor(Location l)
+		circular [SmallSet.<Definition>empty()] {
+		SmallSet<Definition> res = SmallSet.<Definition>empty();
+		if(isReachingDefinitionFor(l)) {
+			res = SmallSet.singleton((Definition)this);
+			if(isBlockingDefinitionFor(l))
+				return res;
+		}
+		for(CFGNode p : pred())
+			res = res.union(p.reachingDefinitionsFor(l));
+		return res;
+	}
+	
+	syn boolean Stmt.isReachingDefinitionFor(Location l) = false;
+	syn boolean Stmt.isBlockingDefinitionFor(Location l) = false;
+	
+	syn boolean Expr.isReachingDefinitionFor(Location l) = false;
+	syn boolean Expr.isBlockingDefinitionFor(Location l) = false;
+	
+	syn boolean ParameterDeclaration.isReachingDefinitionFor(Location l) = mayAlias(l);
+	syn boolean ParameterDeclaration.isBlockingDefinitionFor(Location l) = mustAlias(l);
+
+	eq VariableDeclaration.isReachingDefinitionFor(Location l) = mayAlias(l) && isInitialised();
+	eq VariableDeclaration.isBlockingDefinitionFor(Location l) = mustAlias(l);
+
+	eq Access.isReachingDefinitionFor(Location l) = isDest() && mayReferTo(l);
+	eq Access.isBlockingDefinitionFor(Location l) = mustReferTo(l);
+
+	eq MethodAccess.isReachingDefinitionFor(Location l) = mayDefine(l);
+	eq MethodAccess.isBlockingDefinitionFor(Location l) = mustDefine(l);
+	
+	// take care of local variable references from within local/anonymous classes
+	eq EntryStmt.reachingDefinitionsFor(Location l) {
+		SmallSet<Definition> res = getParent() instanceof Callable && l.isHeapLocation() ? SmallSet.<Definition>singleton(this) : SmallSet.<Definition>empty();
+		if(hostType().isLocalClass()) {
+			return res.union(((LocalClassDeclStmt)hostType().getParent()).reachingDefinitionsFor(l));
+		} else if(hostType().isAnonymous()) {
+			return res.union(((ClassInstanceExpr)hostType().getParent().getParent()).reachingDefinitionsFor(l));
+		}
+		//return super.reachingDefinitionsFor(l);
+		for(CFGNode p : pred())
+			res = res.union(p.reachingDefinitionsFor(l));
+		return res;
+	}
+	
+	// add field declaration as reaching definition
+	eq ExitStmt.reachingDefinitionsFor(Location l) {
+		SmallSet<Definition> res = SmallSet.<Definition>empty();
+		if(getParent() instanceof FieldDeclaration) {
+			FieldDeclaration fd = (FieldDeclaration)getParent();
+			if(fd.isReachingDefinitionFor(l)) {
+				res = SmallSet.singleton((Definition)fd);
+				if(fd.isBlockingDefinitionFor(l))
+					return res;
+			}
+		}
+		for(CFGNode p : pred())
+			res = res.union(p.reachingDefinitionsFor(l));
+		return res;
+	}
+	
+	syn boolean FieldDeclaration.isReachingDefinitionFor(Location l) = this == l;
+	syn boolean FieldDeclaration.isBlockingDefinitionFor(Location l) = false;
+	
+	syn boolean VariableDeclaration.isInitialised() = 
+		hasInit() || getParent() instanceof EnhancedForStmt;
+}

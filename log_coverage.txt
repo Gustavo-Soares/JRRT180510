@@ -1,0 +1,14 @@
+
+init:
+
+emma:
+
+clean:
+
+run_target:
+     [echo] Running JUnit to test the "target"
+    [junit] WARNING: multiple versions of ant detected in path for junit 
+    [junit]          jar:file:/Users/gustavoas/workspaces/csmr2012/Refactoring180510/lib/ant.jar!/org/apache/tools/ant/Project.class
+    [junit]      and jar:file:/Users/gustavoas/workspaces/csmr2012/Refactoring180510/lib/saferefactor-1.1.5.jar!/org/apache/tools/ant/Project.class
+    [junit] Running RandoopTest
+    [junit] Tests run: 112, Failures: 0, Errors: 0, Time elapsed: 0.154 sec

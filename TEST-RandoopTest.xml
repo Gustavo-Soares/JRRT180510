@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="Gustavos-MacBook-Pro.local" name="RandoopTest" tests="112" time="0.154" timestamp="2012-11-19T18:47:00">
+  <properties>
+    <property name="java.vendor" value="Apple Inc." />
+    <property name="sun.java.launcher" value="SUN_STANDARD" />
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers" />
+    <property name="emma.filter" value="" />
+    <property name="lib" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/PullUpMethod4/test7/out/jrrt" />
+    <property name="os.name" value="Mac OS X" />
+    <property name="sun.boot.class.path" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jsfd.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/classes.jar:/System/Library/Frameworks/JavaVM.framework/Frameworks/JavaRuntimeSupport.framework/Resources/Java/JavaRuntimeSupport.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/ui.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/laf.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/sunrsasign.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jsse.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jce.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/charsets.jar" />
+    <property name="out.instr.dir" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T//saferefactorAJ/tests//bin_target/outinstr" />
+    <property name="java.vm.specification.vendor" value="Sun Microsystems Inc." />
+    <property name="java.runtime.version" value="1.6.0_37-b06-434-11M3909" />
+    <property name="user.name" value="gustavoas" />
+    <property name="awt.nativeDoubleBuffering" value="true" />
+    <property name="user.language" value="en" />
+    <property name="sun.boot.library.path" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Libraries" />
+    <property name="ant.project.default-target" value="run_target" />
+    <property name="ant.project.name" value="RefactoringProject" />
+    <property name="java.version" value="1.6.0_37" />
+    <property name="user.timezone" value="" />
+    <property name="sun.arch.data.model" value="64" />
+    <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16" />
+    <property name="emma.coverage.out.file" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T//saferefactorAJ/tests//bin_target/coverage/coverage.emma" />
+    <property name="java.endorsed.dirs" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/endorsed" />
+    <property name="sun.cpu.isalist" value="" />
+    <property name="sun.jnu.encoding" value="MacRoman" />
+    <property name="file.encoding.pkg" value="sun.io" />
+    <property name="file.separator" value="/" />
+    <property name="java.specification.name" value="Java Platform API Specification" />
+    <property name="java.class.version" value="50.0" />
+    <property name="user.country" value="US" />
+    <property name="java.home" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home" />
+    <property name="java.vm.info" value="mixed mode" />
+    <property name="os.version" value="10.8.2" />
+    <property name="path.separator" value=":" />
+    <property name="java.vm.version" value="20.12-b01-434" />
+    <property name="java.awt.printerjob" value="apple.awt.CPrinterJob" />
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle" />
+    <property name="extra.jars" value="/Users/gustavoas/workspaces/csmr2012/Refactoring180510/lib/saferefactor-1.jar" />
+    <property name="awt.toolkit" value="apple.awt.CToolkit" />
+    <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16" />
+    <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16" />
+    <property name="coverage.dir" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T//saferefactorAJ/tests//bin_target/coverage" />
+    <property name="user.home" value="/Users/gustavoas" />
+    <property name="target" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/PullUpMethod4/test7/out/jrrt" />
+    <property name="java.specification.vendor" value="Sun Microsystems Inc." />
+    <property name="java.library.path" value=".:/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java" />
+    <property name="java.vendor.url" value="http://www.apple.com/" />
+    <property name="java.vm.vendor" value="Apple Inc." />
+    <property name="gopherProxySet" value="false" />
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment" />
+    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner RandoopTest filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,/Users/gustavoas/workspaces/csmr2012/Refactoring180510/TEST-RandoopTest.xml crashfile=/Users/gustavoas/workspaces/csmr2012/Refactoring180510/junitvmwatcher3269425526376127589.properties propsfile=/Users/gustavoas/workspaces/csmr2012/Refactoring180510/junit2406591637625629775.properties" />
+    <property name="ant.file.RefactoringProject" value="jar:file:/Users/gustavoas/workspaces/csmr2012/Refactoring180510/lib/saferefactor-1.1.5.jar!/build_coverage.xml" />
+    <property name="java.class.path" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/saferefactorAJ/tests/bin_target/outinstr:/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/PullUpMethod4/test7/out/jrrt:/Users/gustavoas/workspaces/csmr2012/Refactoring180510:/Users/gustavoas/Downloads/eclipse-indigo/plugins/org.junit_3.8.2.v3_8_2_v20100427-1100/junit.jar:/Users/gustavoas/workspaces/csmr2012/Refactoring180510/lib/ant-launcher.jar:/Users/gustavoas/workspaces/csmr2012/Refactoring180510/lib/ant.jar:/Users/gustavoas/workspaces/csmr2012/Refactoring180510/lib/ant-junit.jar:/Users/gustavoas/workspaces/csmr2012/Refactoring180510/lib/org.eclipse.core.runtime_3.2.0.v20060603.jar:/Users/gustavoas/workspaces/csmr2012/Refactoring180510/lib/org.eclipse.equinox.common_3.2.0.v20060603.jar:/Users/gustavoas/workspaces/csmr2012/Refactoring180510/lib/org.eclipse.jdt.core_3.2.3.v_686_R32x.jar:/Users/gustavoas/workspaces/csmr2012/Refactoring180510/lib:/Users/gustavoas/workspaces/csmr2012/Refactoring180510/lib/saferefactor-1.1.5.jar:/Users/gustavoas/workspaces/csmr2012/jdolly/bin:/Users/gustavoas/workspaces/csmr2012/jdolly/lib/ant-junit.jar:/Users/gustavoas/workspaces/csmr2012/jdolly/lib/ant-launcher.jar:/Users/gustavoas/workspaces/csmr2012/jdolly/lib/alloy4.jar:/Users/gustavoas/workspaces/csmr2012/jdolly/lib/org.eclipse.jdt.core_3.2.3.v_686_R32x.jar:/Users/gustavoas/workspaces/csmr2012/jdolly/lib/ant.jar:/Users/gustavoas/workspaces/csmr2012/jdolly/lib/org.eclipse.core.runtime_3.2.0.v20060603.jar:/Users/gustavoas/workspaces/csmr2012/jdolly/lib/org.eclipse.equinox.common_3.2.0.v20060603.jar:/Users/gustavoas/Downloads/eclipse-indigo/plugins/org.junit_4.8.2.v4_8_2_v20110321-1705/junit.jar:/Users/gustavoas/Downloads/eclipse-indigo/plugins/org.hamcrest.core_1.1.0.v20090501071000.jar:/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/saferefactorAJ/tests/bin_target" />
+    <property name="ant.version" value="Apache Ant version 1.8.1 compiled on April 30 2010" />
+    <property name="targetBin" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/PullUpMethod4/test7/out/jrrt" />
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification" />
+    <property name="java.vm.specification.version" value="1.0" />
+    <property name="sun.cpu.endian" value="little" />
+    <property name="sun.os.patch.level" value="unknown" />
+    <property name="java.io.tmpdir" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/" />
+    <property name="targetSrc" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/PullUpMethod4/test7/out/jrrt" />
+    <property name="java.vendor.url.bug" value="http://bugreport.apple.com/" />
+    <property name="mrj.build" value="11M3909" />
+    <property name="os.arch" value="x86_64" />
+    <property name="java.awt.graphicsenv" value="apple.awt.CGraphicsEnvironment" />
+    <property name="java.ext.dirs" value="/Library/Java/Extensions:/System/Library/Java/Extensions:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext" />
+    <property name="mrj.version" value="1070.1.6.0_37-434" />
+    <property name="user.dir" value="/Users/gustavoas/workspaces/csmr2012/Refactoring180510" />
+    <property name="emma.coverage.out.merge" value="false" />
+    <property name="line.separator" value="
+" />
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM" />
+    <property name="ant.file.type.RefactoringProject" value="url" />
+    <property name="basedir" value="/Users/gustavoas/workspaces/csmr2012/Refactoring180510" />
+    <property name="ant.java.version" value="1.6" />
+    <property name="ant.core.lib" value="/Users/gustavoas/workspaces/csmr2012/Refactoring180510/lib/ant.jar" />
+    <property name="tests.folder" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T//saferefactorAJ/tests//bin_target" />
+    <property name="emma.enabled" value="true" />
+    <property name="file.encoding" value="MacRoman" />
+    <property name="java.specification.version" value="1.6" />
+    <property name="src.dir" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/PullUpMethod4/test7/out/jrrt" />
+    <property name="out.dir" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/PullUpMethod4/test7/out/jrrt" />
+  </properties>
+  <testcase classname="RandoopTest0" name="test1" time="0.071" />
+  <testcase classname="RandoopTest0" name="test2" time="0.0" />
+  <testcase classname="RandoopTest0" name="test3" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test4" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test5" time="0.0" />
+  <testcase classname="RandoopTest0" name="test6" time="0.0" />
+  <testcase classname="RandoopTest0" name="test7" time="0.0" />
+  <testcase classname="RandoopTest0" name="test8" time="0.0" />
+  <testcase classname="RandoopTest0" name="test9" time="0.0" />
+  <testcase classname="RandoopTest0" name="test10" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test11" time="0.0" />
+  <testcase classname="RandoopTest0" name="test12" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test13" time="0.0" />
+  <testcase classname="RandoopTest0" name="test14" time="0.0" />
+  <testcase classname="RandoopTest0" name="test15" time="0.0" />
+  <testcase classname="RandoopTest0" name="test16" time="0.0" />
+  <testcase classname="RandoopTest0" name="test17" time="0.0" />
+  <testcase classname="RandoopTest0" name="test18" time="0.0" />
+  <testcase classname="RandoopTest0" name="test19" time="0.0" />
+  <testcase classname="RandoopTest0" name="test20" time="0.0" />
+  <testcase classname="RandoopTest0" name="test21" time="0.0" />
+  <testcase classname="RandoopTest0" name="test22" time="0.0" />
+  <testcase classname="RandoopTest0" name="test23" time="0.0" />
+  <testcase classname="RandoopTest0" name="test24" time="0.0" />
+  <testcase classname="RandoopTest0" name="test25" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test26" time="0.0" />
+  <testcase classname="RandoopTest0" name="test27" time="0.0" />
+  <testcase classname="RandoopTest0" name="test28" time="0.0" />
+  <testcase classname="RandoopTest0" name="test29" time="0.0" />
+  <testcase classname="RandoopTest0" name="test30" time="0.0" />
+  <testcase classname="RandoopTest0" name="test31" time="0.0" />
+  <testcase classname="RandoopTest0" name="test32" time="0.0" />
+  <testcase classname="RandoopTest0" name="test33" time="0.0" />
+  <testcase classname="RandoopTest0" name="test34" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test35" time="0.0" />
+  <testcase classname="RandoopTest0" name="test36" time="0.0" />
+  <testcase classname="RandoopTest0" name="test37" time="0.0" />
+  <testcase classname="RandoopTest0" name="test38" time="0.0" />
+  <testcase classname="RandoopTest0" name="test39" time="0.0" />
+  <testcase classname="RandoopTest0" name="test40" time="0.0" />
+  <testcase classname="RandoopTest0" name="test41" time="0.0" />
+  <testcase classname="RandoopTest0" name="test42" time="0.0" />
+  <testcase classname="RandoopTest0" name="test43" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test44" time="0.0" />
+  <testcase classname="RandoopTest0" name="test45" time="0.0" />
+  <testcase classname="RandoopTest0" name="test46" time="0.0" />
+  <testcase classname="RandoopTest0" name="test47" time="0.0" />
+  <testcase classname="RandoopTest0" name="test48" time="0.0" />
+  <testcase classname="RandoopTest0" name="test49" time="0.0" />
+  <testcase classname="RandoopTest0" name="test50" time="0.0" />
+  <testcase classname="RandoopTest0" name="test51" time="0.0" />
+  <testcase classname="RandoopTest0" name="test52" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test53" time="0.0" />
+  <testcase classname="RandoopTest0" name="test54" time="0.0" />
+  <testcase classname="RandoopTest0" name="test55" time="0.0" />
+  <testcase classname="RandoopTest0" name="test56" time="0.0" />
+  <testcase classname="RandoopTest0" name="test57" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test58" time="0.0" />
+  <testcase classname="RandoopTest0" name="test59" time="0.0" />
+  <testcase classname="RandoopTest0" name="test60" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test61" time="0.0" />
+  <testcase classname="RandoopTest0" name="test62" time="0.0" />
+  <testcase classname="RandoopTest0" name="test63" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test64" time="0.0" />
+  <testcase classname="RandoopTest0" name="test65" time="0.0" />
+  <testcase classname="RandoopTest0" name="test66" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test67" time="0.0" />
+  <testcase classname="RandoopTest0" name="test68" time="0.0" />
+  <testcase classname="RandoopTest0" name="test69" time="0.0" />
+  <testcase classname="RandoopTest0" name="test70" time="0.0" />
+  <testcase classname="RandoopTest0" name="test71" time="0.0" />
+  <testcase classname="RandoopTest0" name="test72" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test73" time="0.0" />
+  <testcase classname="RandoopTest0" name="test74" time="0.0" />
+  <testcase classname="RandoopTest0" name="test75" time="0.0" />
+  <testcase classname="RandoopTest0" name="test76" time="0.0" />
+  <testcase classname="RandoopTest0" name="test77" time="0.0" />
+  <testcase classname="RandoopTest0" name="test78" time="0.0" />
+  <testcase classname="RandoopTest0" name="test79" time="0.0" />
+  <testcase classname="RandoopTest0" name="test80" time="0.0" />
+  <testcase classname="RandoopTest0" name="test81" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test82" time="0.0" />
+  <testcase classname="RandoopTest0" name="test83" time="0.0" />
+  <testcase classname="RandoopTest0" name="test84" time="0.0" />
+  <testcase classname="RandoopTest0" name="test85" time="0.0" />
+  <testcase classname="RandoopTest0" name="test86" time="0.0" />
+  <testcase classname="RandoopTest0" name="test87" time="0.0" />
+  <testcase classname="RandoopTest0" name="test88" time="0.0" />
+  <testcase classname="RandoopTest0" name="test89" time="0.0" />
+  <testcase classname="RandoopTest0" name="test90" time="0.0" />
+  <testcase classname="RandoopTest0" name="test91" time="0.0" />
+  <testcase classname="RandoopTest0" name="test92" time="0.0" />
+  <testcase classname="RandoopTest0" name="test93" time="0.0" />
+  <testcase classname="RandoopTest0" name="test94" time="0.0" />
+  <testcase classname="RandoopTest0" name="test95" time="0.0" />
+  <testcase classname="RandoopTest0" name="test96" time="0.0" />
+  <testcase classname="RandoopTest0" name="test97" time="0.0" />
+  <testcase classname="RandoopTest0" name="test98" time="0.0" />
+  <testcase classname="RandoopTest0" name="test99" time="0.0" />
+  <testcase classname="RandoopTest0" name="test100" time="0.0" />
+  <testcase classname="RandoopTest0" name="test101" time="0.0" />
+  <testcase classname="RandoopTest0" name="test102" time="0.0" />
+  <testcase classname="RandoopTest0" name="test103" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test104" time="0.0" />
+  <testcase classname="RandoopTest0" name="test105" time="0.0" />
+  <testcase classname="RandoopTest0" name="test106" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test107" time="0.0" />
+  <testcase classname="RandoopTest0" name="test108" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test109" time="0.0" />
+  <testcase classname="RandoopTest0" name="test110" time="0.0" />
+  <testcase classname="RandoopTest0" name="test111" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test112" time="0.0" />
+  <system-out><![CDATA[EMMA: collecting runtime coverage data ...
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

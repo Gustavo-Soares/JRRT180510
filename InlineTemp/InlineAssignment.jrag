@@ -1,0 +1,39 @@
+aspect InlineAssignment {	
+	public void AssignSimpleExpr.inline() throws RefactoringException {
+		if(!(getParent() instanceof ExprStmt))
+			throw new RefactoringException("cannot inline this assignment");
+		Stmt stmt = (Stmt)getParent();
+		if(!(getDest() instanceof VarAccess))
+			throw new RefactoringException("LHS is not a simple variable");
+		VarAccess v = (VarAccess)getDest();
+		if(!v.decl().isLocalVariable())
+			throw new RefactoringException("can only inline assignment to local variable");
+		setSource(getSource().makeConversionExplicit(getDest().type()));
+		Expr rhs;
+		SmallSet<Access> dsuccs = v.reachedUses();
+		BodyDecl bd = hostBodyDecl();
+		// check that all the data successors have this as their only data predecessor and are not destinations
+		// and replace them by copies of the RHS
+		// fail if any of the data successors are not in the same method (e.g., inside an anonymous class)
+		for(Access w : dsuccs) {
+			getSource().lockAllNames();
+			bd.hostType().flushCaches();
+			rhs = getSource();
+			rhs.lockDataFlow(1);
+			bd.lockSyncDependencies();
+			if(w.isDest())
+				throw new RefactoringException("cannot inline into destinations");
+			if(w.hostBodyDecl() != stmt.hostBodyDecl())
+				throw new RefactoringException("cannot inline across method boundaries");
+			if(!w.reachingDefinitions().isSingleton())
+				throw new RefactoringException("ambiguous dataflow");
+			w.replaceWith(rhs.precedence() > w.maxPrecedence() ? new ParExpr(rhs) : rhs);
+			compilationUnit().flushCaches();
+			rhs.unlockDataFlow();
+			bd.unlockSyncDependencies();
+			setSource(rhs = (Expr)rhs.fullCopy());
+		}
+		// delete assignment
+		stmt.delete();
+	}
+}

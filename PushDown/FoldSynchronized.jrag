@@ -1,0 +1,6 @@
+aspect FoldSynchronized {
+	/* The implementation of this aspect cannot currently be distributed
+	 * together with the rest of the refactoring framework due to 
+	 * licensing issues. This file only contains stubs. */
+	public void MethodDecl.foldSynchronized() {}
+}

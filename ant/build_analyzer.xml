@@ -1,0 +1,127 @@
+<project name="analyzer" default="test" basedir="../">
+
+	 <!--<property name="source_folder" value="/tmp/pullupmethod/dualclassmethodchild0/test3/in"></property>
+	 <property name="target_folder" value="/tmp/pullupmethod/dualclassmethodchild0/test3/out"></property>--> 
+	 
+	<path id="classpath">
+		<!--<fileset dir="/tmp/antLib/" 	 />-->
+		<fileset dir="antLib"/>
+	</path>
+
+<target name="create_folders">
+<echo>Criando diretorios</echo>	
+	<mkdir dir="/tmp/testes/"/>
+	<mkdir dir="/tmp/result/source"/>
+	<mkdir dir="/tmp/result/target"/>
+</target>
+	
+<target name="limpa" depends="create_folders">
+	<echo>Source: ${source_folder}</echo>
+	<echo>Targe ${target_folder}</echo>
+		<echo>Limpando</echo>		
+	    <delete includeemptydirs="false">
+				<fileset dir="${source_folder}" includes="*.class" />
+		</delete>
+     	<delete includeemptydirs="false">
+					<fileset dir="/tmp/result/source" />
+     	</delete>
+     	<delete includeemptydirs="false">
+				<fileset dir="/tmp/result/target" />
+ 	    </delete>
+    	<delete includeemptydirs="false">
+				<fileset dir="/tmp/testes" />
+ 	    </delete>
+        <delete includeemptydirs="false">
+			<fileset dir="/tmp/" includes="classes.txt,intersection.txt" />
+    	</delete>
+
+</target>
+	
+	<target name="compileSource" depends="limpa">
+			<echo>Compiling the analyzer</echo>
+				<javac  fork="yes" memorymaximumsize="512m" debug="on" srcdir="${source_folder}" destdir="${source_folder}">
+					<classpath refid="classpath" />
+				</javac>
+		</target>
+
+	<target name="compileTarget" depends="compileSource">
+				<echo>Compiling the analyzer</echo>
+					<javac  fork="yes" memorymaximumsize="512m" debug="on" srcdir="${target_folder}" destdir="${target_folder}">
+						<classpath refid="classpath" />
+					</javac>
+			</target>			
+
+	<target name="make_source" depends="compileTarget">
+				<echo>Creating source methods</echo>			
+				<java fork="yes" maxmemory="512m" classname="safeRefactor.MethodsRunner">
+					<arg line="${source_folder}" />					
+					<arg line="1" />		
+					<classpath refid="classpath" />				
+					<classpath path="${source_folder}" />					
+					<classpath path="." />
+				</java>
+	</target>
+	
+	<target name="make_taget" depends="make_source">
+				<echo>Creating target methods</echo>			
+				<java fork="yes" maxmemory="512m" classname="safeRefactor.MethodsRunner">
+					<arg line="${target_folder}" />					
+					<arg line="2" />		
+					<classpath refid="classpath" />				
+					<classpath path="${target_folder}" />					
+					<classpath path="." />
+				</java>
+	</target>
+
+		<target name="make_analyzer" depends="make_taget">
+			<echo>Creating intersection</echo>			
+			<java fork="yes" maxmemory="512m" classname="safeRefactor.Analyzer">
+				<arg line="${source_folder}" />
+				<arg line="${target_folder}" />	
+				<classpath refid="classpath" />		
+				<classpath path="${source_folder}" />			
+				<classpath path="." />
+			</java>
+		</target>
+	
+	<target name="compile_tests" depends="make_analyzer">
+			<echo>Compiling the tests</echo>
+			<javac fork="yes" memorymaximumsize="512m" includes="*.java" debug="on" srcdir="/tmp/testes/" destdir="/tmp/testes/">
+				<classpath>
+					<pathelement path="antLib/junit-4.5.jar" />
+					<pathelement path="${source_folder}" />
+				</classpath>
+			</javac>
+		</target>
+	
+	<target name="test" depends="compile_tests">
+			<echo>Running JUnit to test the "source"</echo>
+			<junit printsummary="yes" haltonfailure="yes" fork="true" maxmemory="512m">
+				<classpath refid="classpath" />		
+				<classpath>					
+					<pathelement path="${source_folder}" />
+					<pathelement path="/tmp/testes/" />
+				</classpath>
+				<formatter type="xml" />
+				<batchtest fork="yes" todir="/tmp/result/source" haltonfailure="no">
+					<fileset dir="/tmp/testes/">
+						<include name="*Test.class" />
+					</fileset>
+				</batchtest>
+			</junit>
+		<echo>Running JUnit to test the "target"</echo>
+		<junit printsummary="yes" haltonfailure="yes" fork="true" maxmemory="512m">
+			<classpath refid="classpath" />					
+			<classpath>								
+							<pathelement path="${target_folder}" />
+							<pathelement path="/tmp/testes/" />
+						</classpath>
+						<formatter type="xml" />
+						<batchtest fork="yes" todir="/tmp/result/target" haltonfailure="no">
+							<fileset dir="/tmp/testes/">
+								<include name="*Test.class" />
+							</fileset>
+						</batchtest>
+					</junit>
+		</target>
+</project>

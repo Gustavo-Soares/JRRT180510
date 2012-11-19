@@ -1,0 +1,30 @@
+aspect ExtractAssignment {	
+	// extract an expression as an assignment to a variable
+	public VariableDeclaration Expr.extractAssignment(VariableDeclaration v) {
+		if(inextractible())
+			throw new RefactoringException("expression is not extractible");
+		if(getParent() instanceof ExprStmt) {
+			ExprStmt parent = (ExprStmt)getParent();
+			parent.setExpr(new AssignSimpleExpr(v.createLockedAccess(), this));
+		} else {
+			Block block = enclosingBlock();
+			if(block == null)
+				throw new RefactoringException("cannot extract assignment here");
+			lockAllNames();
+			lockDataFlow();
+			block.lockSyncDependencies();
+			VarAccess vacc = v.createLockedAccess();
+			replaceWith(vacc);
+			vacc.insertStmtBefore(AssignExpr.asStmt(v.createLockedAccess(), this));
+			block.hostType().flushCaches();
+			unlockDataFlow();
+			block.unlockSyncDependencies();
+		}
+		return v;
+	}
+	
+	public VariableDeclaration VariableDeclaration.extractAssignment(Expr expr) {
+		return expr.extractAssignment(this);
+	}
+	
+}
