@@ -1,12 +1,8 @@
 	package tests.jdolly;
 
-import java.util.Collection;
 
 import jdolly.JDolly;
 import jdolly.JDollyImp;
-
-
-import tests.CompileHelper;
 import AST.MethodDecl;
 import AST.Program;
 import AST.RefactoringException;
@@ -34,7 +30,8 @@ public class PullUpMethodTest extends Test {
 	
 	@Override
 	protected JDolly getCUGen() {
-		JDolly jdolly = new JDollyImp("../jdolly/alloyTheory/pullupmethod_final.als",2, 3, 4);
+		 
+		JDolly jdolly = new JDollyImp("jdolly-0.4/alloyTheory/pullupmethod_final.als",2, 3, 4);
 		jdolly.setExactMaxPackages(true);
 		jdolly.setMaxClassNames(3);
 		jdolly.setExactMaxClassNames(true);
