@@ -11,9 +11,9 @@ public class RunTests {
 	
 //		new PushDownMethodTest().run();
 //		new EncapsulateFieldTest().run();
-		clean();	
+//		clean();	
 //		new AddParameterTest().run();
-		clean();
+//		clean();
 //		new MoveMethodTest().run();
 //		clean();
 		new PullUpMethodTest().run();

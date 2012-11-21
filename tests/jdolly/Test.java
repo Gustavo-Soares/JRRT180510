@@ -157,7 +157,7 @@ public abstract class Test {
 
 					if (checkBehaviorConditions(inDir.toString(),
 							outDir.toString())) {
-						logger.logCoverage();
+//						logger.logCoverage();
 						String fileLog = outDir + FILE_SEPARATOR
 								+ BEHAVIORAL_CHANGE;
 						FileUtil.gravaArquivo(fileLog, BEHAVIORAL_CHANGE);
@@ -515,7 +515,7 @@ public abstract class Test {
 
 		Parameters parameters = new Parameters();
 		parameters.setTimeLimit(1);
-		parameters.setCheckCoverage(true);
+//		parameters.setCheckCoverage(true);
 		result = new SafeRefactor(source, target, parameters);
 
 		return result;

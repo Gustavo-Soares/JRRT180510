@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="0" failures="0" hostname="Gustavos-MacBook-Pro.local" name="RandoopTest" tests="112" time="0.154" timestamp="2012-11-19T18:47:00">
+<testsuite errors="0" failures="105" hostname="Gustavos-MacBook-Pro.local" name="RandoopTest" tests="107" time="0.224" timestamp="2012-11-20T20:45:57">
   <properties>
     <property name="java.vendor" value="Apple Inc." />
     <property name="sun.java.launcher" value="SUN_STANDARD" />
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers" />
     <property name="emma.filter" value="" />
-    <property name="lib" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/PullUpMethod4/test7/out/jrrt" />
+    <property name="lib" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/PullUpMethod7/test190/out/jrrt" />
     <property name="os.name" value="Mac OS X" />
     <property name="sun.boot.class.path" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jsfd.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/classes.jar:/System/Library/Frameworks/JavaVM.framework/Frameworks/JavaRuntimeSupport.framework/Resources/Java/JavaRuntimeSupport.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/ui.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/laf.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/sunrsasign.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jsse.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jce.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/charsets.jar" />
     <property name="out.instr.dir" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T//saferefactorAJ/tests//bin_target/outinstr" />
@@ -43,24 +43,24 @@
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16" />
     <property name="coverage.dir" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T//saferefactorAJ/tests//bin_target/coverage" />
     <property name="user.home" value="/Users/gustavoas" />
-    <property name="target" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/PullUpMethod4/test7/out/jrrt" />
+    <property name="target" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/PullUpMethod7/test190/out/jrrt" />
     <property name="java.specification.vendor" value="Sun Microsystems Inc." />
     <property name="java.library.path" value=".:/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java" />
     <property name="java.vendor.url" value="http://www.apple.com/" />
     <property name="java.vm.vendor" value="Apple Inc." />
     <property name="gopherProxySet" value="false" />
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment" />
-    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner RandoopTest filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,/Users/gustavoas/workspaces/csmr2012/Refactoring180510/TEST-RandoopTest.xml crashfile=/Users/gustavoas/workspaces/csmr2012/Refactoring180510/junitvmwatcher3269425526376127589.properties propsfile=/Users/gustavoas/workspaces/csmr2012/Refactoring180510/junit2406591637625629775.properties" />
-    <property name="ant.file.RefactoringProject" value="jar:file:/Users/gustavoas/workspaces/csmr2012/Refactoring180510/lib/saferefactor-1.1.5.jar!/build_coverage.xml" />
-    <property name="java.class.path" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/saferefactorAJ/tests/bin_target/outinstr:/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/PullUpMethod4/test7/out/jrrt:/Users/gustavoas/workspaces/csmr2012/Refactoring180510:/Users/gustavoas/Downloads/eclipse-indigo/plugins/org.junit_3.8.2.v3_8_2_v20100427-1100/junit.jar:/Users/gustavoas/workspaces/csmr2012/Refactoring180510/lib/ant-launcher.jar:/Users/gustavoas/workspaces/csmr2012/Refactoring180510/lib/ant.jar:/Users/gustavoas/workspaces/csmr2012/Refactoring180510/lib/ant-junit.jar:/Users/gustavoas/workspaces/csmr2012/Refactoring180510/lib/org.eclipse.core.runtime_3.2.0.v20060603.jar:/Users/gustavoas/workspaces/csmr2012/Refactoring180510/lib/org.eclipse.equinox.common_3.2.0.v20060603.jar:/Users/gustavoas/workspaces/csmr2012/Refactoring180510/lib/org.eclipse.jdt.core_3.2.3.v_686_R32x.jar:/Users/gustavoas/workspaces/csmr2012/Refactoring180510/lib:/Users/gustavoas/workspaces/csmr2012/Refactoring180510/lib/saferefactor-1.1.5.jar:/Users/gustavoas/workspaces/csmr2012/jdolly/bin:/Users/gustavoas/workspaces/csmr2012/jdolly/lib/ant-junit.jar:/Users/gustavoas/workspaces/csmr2012/jdolly/lib/ant-launcher.jar:/Users/gustavoas/workspaces/csmr2012/jdolly/lib/alloy4.jar:/Users/gustavoas/workspaces/csmr2012/jdolly/lib/org.eclipse.jdt.core_3.2.3.v_686_R32x.jar:/Users/gustavoas/workspaces/csmr2012/jdolly/lib/ant.jar:/Users/gustavoas/workspaces/csmr2012/jdolly/lib/org.eclipse.core.runtime_3.2.0.v20060603.jar:/Users/gustavoas/workspaces/csmr2012/jdolly/lib/org.eclipse.equinox.common_3.2.0.v20060603.jar:/Users/gustavoas/Downloads/eclipse-indigo/plugins/org.junit_4.8.2.v4_8_2_v20110321-1705/junit.jar:/Users/gustavoas/Downloads/eclipse-indigo/plugins/org.hamcrest.core_1.1.0.v20090501071000.jar:/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/saferefactorAJ/tests/bin_target" />
+    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner RandoopTest filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,/Users/gustavoas/workspaces/csmr2012/Refactoring180510/TEST-RandoopTest.xml crashfile=/Users/gustavoas/workspaces/csmr2012/Refactoring180510/junitvmwatcher6856871180730441092.properties propsfile=/Users/gustavoas/workspaces/csmr2012/Refactoring180510/junit6901282727444597095.properties" />
+    <property name="ant.file.RefactoringProject" value="jar:file:/Users/gustavoas/workspaces/csmr2012/Refactoring180510/lib/saferefactor-1.1.6.jar!/build_coverage.xml" />
+    <property name="java.class.path" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/saferefactorAJ/tests/bin_target/outinstr:/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/PullUpMethod7/test190/out/jrrt:/Users/gustavoas/workspaces/csmr2012/Refactoring180510:/Users/gustavoas/Downloads/eclipse-indigo/plugins/org.junit_3.8.2.v3_8_2_v20100427-1100/junit.jar:/Users/gustavoas/workspaces/csmr2012/Refactoring180510/lib/ant-launcher.jar:/Users/gustavoas/workspaces/csmr2012/Refactoring180510/lib/ant.jar:/Users/gustavoas/workspaces/csmr2012/Refactoring180510/lib/ant-junit.jar:/Users/gustavoas/workspaces/csmr2012/Refactoring180510/lib/org.eclipse.core.runtime_3.2.0.v20060603.jar:/Users/gustavoas/workspaces/csmr2012/Refactoring180510/lib/org.eclipse.equinox.common_3.2.0.v20060603.jar:/Users/gustavoas/workspaces/csmr2012/Refactoring180510/lib/org.eclipse.jdt.core_3.2.3.v_686_R32x.jar:/Users/gustavoas/workspaces/csmr2012/Refactoring180510/jdolly-0.4:/Users/gustavoas/workspaces/csmr2012/Refactoring180510/jdolly-0.4/jdolly-0.4.jar:/Users/gustavoas/workspaces/csmr2012/Refactoring180510/lib:/Users/gustavoas/workspaces/csmr2012/Refactoring180510/lib/saferefactor-1.1.6.jar:/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/saferefactorAJ/tests/bin_target" />
     <property name="ant.version" value="Apache Ant version 1.8.1 compiled on April 30 2010" />
-    <property name="targetBin" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/PullUpMethod4/test7/out/jrrt" />
+    <property name="targetBin" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/PullUpMethod7/test190/out/jrrt" />
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification" />
     <property name="java.vm.specification.version" value="1.0" />
     <property name="sun.cpu.endian" value="little" />
     <property name="sun.os.patch.level" value="unknown" />
     <property name="java.io.tmpdir" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/" />
-    <property name="targetSrc" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/PullUpMethod4/test7/out/jrrt" />
+    <property name="targetSrc" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/PullUpMethod7/test190/out/jrrt" />
     <property name="java.vendor.url.bug" value="http://bugreport.apple.com/" />
     <property name="mrj.build" value="11M3909" />
     <property name="os.arch" value="x86_64" />
@@ -80,121 +80,536 @@
     <property name="emma.enabled" value="true" />
     <property name="file.encoding" value="MacRoman" />
     <property name="java.specification.version" value="1.6" />
-    <property name="src.dir" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/PullUpMethod4/test7/out/jrrt" />
-    <property name="out.dir" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/PullUpMethod4/test7/out/jrrt" />
+    <property name="src.dir" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/PullUpMethod7/test190/out/jrrt" />
+    <property name="out.dir" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/PullUpMethod7/test190/out/jrrt" />
   </properties>
-  <testcase classname="RandoopTest0" name="test1" time="0.071" />
-  <testcase classname="RandoopTest0" name="test2" time="0.0" />
-  <testcase classname="RandoopTest0" name="test3" time="0.0010" />
-  <testcase classname="RandoopTest0" name="test4" time="0.0010" />
-  <testcase classname="RandoopTest0" name="test5" time="0.0" />
-  <testcase classname="RandoopTest0" name="test6" time="0.0" />
-  <testcase classname="RandoopTest0" name="test7" time="0.0" />
-  <testcase classname="RandoopTest0" name="test8" time="0.0" />
-  <testcase classname="RandoopTest0" name="test9" time="0.0" />
-  <testcase classname="RandoopTest0" name="test10" time="0.0010" />
-  <testcase classname="RandoopTest0" name="test11" time="0.0" />
-  <testcase classname="RandoopTest0" name="test12" time="0.0010" />
-  <testcase classname="RandoopTest0" name="test13" time="0.0" />
-  <testcase classname="RandoopTest0" name="test14" time="0.0" />
-  <testcase classname="RandoopTest0" name="test15" time="0.0" />
-  <testcase classname="RandoopTest0" name="test16" time="0.0" />
-  <testcase classname="RandoopTest0" name="test17" time="0.0" />
-  <testcase classname="RandoopTest0" name="test18" time="0.0" />
-  <testcase classname="RandoopTest0" name="test19" time="0.0" />
-  <testcase classname="RandoopTest0" name="test20" time="0.0" />
-  <testcase classname="RandoopTest0" name="test21" time="0.0" />
-  <testcase classname="RandoopTest0" name="test22" time="0.0" />
-  <testcase classname="RandoopTest0" name="test23" time="0.0" />
-  <testcase classname="RandoopTest0" name="test24" time="0.0" />
-  <testcase classname="RandoopTest0" name="test25" time="0.0010" />
-  <testcase classname="RandoopTest0" name="test26" time="0.0" />
-  <testcase classname="RandoopTest0" name="test27" time="0.0" />
-  <testcase classname="RandoopTest0" name="test28" time="0.0" />
-  <testcase classname="RandoopTest0" name="test29" time="0.0" />
-  <testcase classname="RandoopTest0" name="test30" time="0.0" />
-  <testcase classname="RandoopTest0" name="test31" time="0.0" />
-  <testcase classname="RandoopTest0" name="test32" time="0.0" />
-  <testcase classname="RandoopTest0" name="test33" time="0.0" />
-  <testcase classname="RandoopTest0" name="test34" time="0.0010" />
-  <testcase classname="RandoopTest0" name="test35" time="0.0" />
-  <testcase classname="RandoopTest0" name="test36" time="0.0" />
-  <testcase classname="RandoopTest0" name="test37" time="0.0" />
-  <testcase classname="RandoopTest0" name="test38" time="0.0" />
-  <testcase classname="RandoopTest0" name="test39" time="0.0" />
-  <testcase classname="RandoopTest0" name="test40" time="0.0" />
-  <testcase classname="RandoopTest0" name="test41" time="0.0" />
-  <testcase classname="RandoopTest0" name="test42" time="0.0" />
-  <testcase classname="RandoopTest0" name="test43" time="0.0010" />
-  <testcase classname="RandoopTest0" name="test44" time="0.0" />
-  <testcase classname="RandoopTest0" name="test45" time="0.0" />
-  <testcase classname="RandoopTest0" name="test46" time="0.0" />
-  <testcase classname="RandoopTest0" name="test47" time="0.0" />
-  <testcase classname="RandoopTest0" name="test48" time="0.0" />
-  <testcase classname="RandoopTest0" name="test49" time="0.0" />
-  <testcase classname="RandoopTest0" name="test50" time="0.0" />
-  <testcase classname="RandoopTest0" name="test51" time="0.0" />
-  <testcase classname="RandoopTest0" name="test52" time="0.0010" />
-  <testcase classname="RandoopTest0" name="test53" time="0.0" />
-  <testcase classname="RandoopTest0" name="test54" time="0.0" />
-  <testcase classname="RandoopTest0" name="test55" time="0.0" />
-  <testcase classname="RandoopTest0" name="test56" time="0.0" />
-  <testcase classname="RandoopTest0" name="test57" time="0.0010" />
-  <testcase classname="RandoopTest0" name="test58" time="0.0" />
-  <testcase classname="RandoopTest0" name="test59" time="0.0" />
-  <testcase classname="RandoopTest0" name="test60" time="0.0010" />
-  <testcase classname="RandoopTest0" name="test61" time="0.0" />
-  <testcase classname="RandoopTest0" name="test62" time="0.0" />
-  <testcase classname="RandoopTest0" name="test63" time="0.0010" />
-  <testcase classname="RandoopTest0" name="test64" time="0.0" />
-  <testcase classname="RandoopTest0" name="test65" time="0.0" />
-  <testcase classname="RandoopTest0" name="test66" time="0.0010" />
-  <testcase classname="RandoopTest0" name="test67" time="0.0" />
-  <testcase classname="RandoopTest0" name="test68" time="0.0" />
-  <testcase classname="RandoopTest0" name="test69" time="0.0" />
-  <testcase classname="RandoopTest0" name="test70" time="0.0" />
-  <testcase classname="RandoopTest0" name="test71" time="0.0" />
-  <testcase classname="RandoopTest0" name="test72" time="0.0010" />
-  <testcase classname="RandoopTest0" name="test73" time="0.0" />
-  <testcase classname="RandoopTest0" name="test74" time="0.0" />
-  <testcase classname="RandoopTest0" name="test75" time="0.0" />
-  <testcase classname="RandoopTest0" name="test76" time="0.0" />
-  <testcase classname="RandoopTest0" name="test77" time="0.0" />
-  <testcase classname="RandoopTest0" name="test78" time="0.0" />
-  <testcase classname="RandoopTest0" name="test79" time="0.0" />
-  <testcase classname="RandoopTest0" name="test80" time="0.0" />
-  <testcase classname="RandoopTest0" name="test81" time="0.0010" />
-  <testcase classname="RandoopTest0" name="test82" time="0.0" />
-  <testcase classname="RandoopTest0" name="test83" time="0.0" />
-  <testcase classname="RandoopTest0" name="test84" time="0.0" />
-  <testcase classname="RandoopTest0" name="test85" time="0.0" />
-  <testcase classname="RandoopTest0" name="test86" time="0.0" />
-  <testcase classname="RandoopTest0" name="test87" time="0.0" />
-  <testcase classname="RandoopTest0" name="test88" time="0.0" />
-  <testcase classname="RandoopTest0" name="test89" time="0.0" />
-  <testcase classname="RandoopTest0" name="test90" time="0.0" />
-  <testcase classname="RandoopTest0" name="test91" time="0.0" />
-  <testcase classname="RandoopTest0" name="test92" time="0.0" />
-  <testcase classname="RandoopTest0" name="test93" time="0.0" />
-  <testcase classname="RandoopTest0" name="test94" time="0.0" />
-  <testcase classname="RandoopTest0" name="test95" time="0.0" />
-  <testcase classname="RandoopTest0" name="test96" time="0.0" />
-  <testcase classname="RandoopTest0" name="test97" time="0.0" />
-  <testcase classname="RandoopTest0" name="test98" time="0.0" />
-  <testcase classname="RandoopTest0" name="test99" time="0.0" />
-  <testcase classname="RandoopTest0" name="test100" time="0.0" />
-  <testcase classname="RandoopTest0" name="test101" time="0.0" />
-  <testcase classname="RandoopTest0" name="test102" time="0.0" />
-  <testcase classname="RandoopTest0" name="test103" time="0.0010" />
-  <testcase classname="RandoopTest0" name="test104" time="0.0" />
-  <testcase classname="RandoopTest0" name="test105" time="0.0" />
-  <testcase classname="RandoopTest0" name="test106" time="0.0010" />
-  <testcase classname="RandoopTest0" name="test107" time="0.0" />
-  <testcase classname="RandoopTest0" name="test108" time="0.0010" />
-  <testcase classname="RandoopTest0" name="test109" time="0.0" />
-  <testcase classname="RandoopTest0" name="test110" time="0.0" />
-  <testcase classname="RandoopTest0" name="test111" time="0.0010" />
-  <testcase classname="RandoopTest0" name="test112" time="0.0" />
+  <testcase classname="RandoopTest0" name="test1" time="0.077" />
+  <testcase classname="RandoopTest0" name="test2" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test3" time="0.0030">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test3(RandoopTest0.java:44)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test4" time="0.0020">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test4(RandoopTest0.java:85)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test5" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test5(RandoopTest0.java:110)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test6" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test6(RandoopTest0.java:160)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test7" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test7(RandoopTest0.java:210)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test8" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test8(RandoopTest0.java:252)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test9" time="0.0020">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test9(RandoopTest0.java:297)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test10" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test10(RandoopTest0.java:344)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test11" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test11(RandoopTest0.java:398)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test12" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test12(RandoopTest0.java:449)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test13" time="0.0020">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test13(RandoopTest0.java:482)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test14" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test14(RandoopTest0.java:514)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test15" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test15(RandoopTest0.java:546)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test16" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test16(RandoopTest0.java:592)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test17" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test17(RandoopTest0.java:649)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test18" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test18(RandoopTest0.java:694)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test19" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test19(RandoopTest0.java:743)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test20" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test20(RandoopTest0.java:800)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test21" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test21(RandoopTest0.java:848)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test22" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test22(RandoopTest0.java:905)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test23" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test23(RandoopTest0.java:961)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test24" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test24(RandoopTest0.java:1013)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test25" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test25(RandoopTest0.java:1061)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test26" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test26(RandoopTest0.java:1108)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test27" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test27(RandoopTest0.java:1158)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test28" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test28(RandoopTest0.java:1200)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test29" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test29(RandoopTest0.java:1246)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test30" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test30(RandoopTest0.java:1294)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test31" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test31(RandoopTest0.java:1342)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test32" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test32(RandoopTest0.java:1397)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test33" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test33(RandoopTest0.java:1445)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test34" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test34(RandoopTest0.java:1493)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test35" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test35(RandoopTest0.java:1549)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test36" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test36(RandoopTest0.java:1601)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test37" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test37(RandoopTest0.java:1652)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test38" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test38(RandoopTest0.java:1708)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test39" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test39(RandoopTest0.java:1758)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test40" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test40(RandoopTest0.java:1806)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test41" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test41(RandoopTest0.java:1866)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test42" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test42(RandoopTest0.java:1902)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test43" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test43(RandoopTest0.java:1950)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test44" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test44(RandoopTest0.java:2002)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test45" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test45(RandoopTest0.java:2045)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test46" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test46(RandoopTest0.java:2105)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test47" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test47(RandoopTest0.java:2160)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test48" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test48(RandoopTest0.java:2209)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test49" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test49(RandoopTest0.java:2260)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test50" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test50(RandoopTest0.java:2315)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test51" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test51(RandoopTest0.java:2358)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test52" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test52(RandoopTest0.java:2388)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test53" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test53(RandoopTest0.java:2432)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test54" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test54(RandoopTest0.java:2477)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test55" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test55(RandoopTest0.java:2533)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test56" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test56(RandoopTest0.java:2584)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test57" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test57(RandoopTest0.java:2632)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test58" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test58(RandoopTest0.java:2689)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test59" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test59(RandoopTest0.java:2744)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test60" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test60(RandoopTest0.java:2791)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test61" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test61(RandoopTest0.java:2833)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test62" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test62(RandoopTest0.java:2881)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test63" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test63(RandoopTest0.java:2935)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test64" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test64(RandoopTest0.java:2979)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test65" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test65(RandoopTest0.java:3018)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test66" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test66(RandoopTest0.java:3054)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test67" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test67(RandoopTest0.java:3097)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test68" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test68(RandoopTest0.java:3140)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test69" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test69(RandoopTest0.java:3201)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test70" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test70(RandoopTest0.java:3259)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test71" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test71(RandoopTest0.java:3310)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test72" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test72(RandoopTest0.java:3371)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test73" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test73(RandoopTest0.java:3438)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test74" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test74(RandoopTest0.java:3487)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test75" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test75(RandoopTest0.java:3537)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test76" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test76(RandoopTest0.java:3591)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test77" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test77(RandoopTest0.java:3646)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test78" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test78(RandoopTest0.java:3699)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test79" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test79(RandoopTest0.java:3761)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test80" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test80(RandoopTest0.java:3812)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test81" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test81(RandoopTest0.java:3859)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test82" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test82(RandoopTest0.java:3911)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test83" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test83(RandoopTest0.java:3961)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test84" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test84(RandoopTest0.java:4013)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test85" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test85(RandoopTest0.java:4064)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test86" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test86(RandoopTest0.java:4122)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test87" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test87(RandoopTest0.java:4179)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test88" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test88(RandoopTest0.java:4225)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test89" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test89(RandoopTest0.java:4277)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test90" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test90(RandoopTest0.java:4336)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test91" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test91(RandoopTest0.java:4389)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test92" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test92(RandoopTest0.java:4439)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test93" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test93(RandoopTest0.java:4484)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test94" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test94(RandoopTest0.java:4546)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test95" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test95(RandoopTest0.java:4617)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test96" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test96(RandoopTest0.java:4672)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test97" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test97(RandoopTest0.java:4733)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test98" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test98(RandoopTest0.java:4792)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test99" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test99(RandoopTest0.java:4846)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test100" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test100(RandoopTest0.java:4900)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test101" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test101(RandoopTest0.java:4948)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test102" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test102(RandoopTest0.java:5001)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test103" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test103(RandoopTest0.java:5045)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test104" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test104(RandoopTest0.java:5099)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test105" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test105(RandoopTest0.java:5157)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test106" time="0.0010">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test106(RandoopTest0.java:5215)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test107" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test107(RandoopTest0.java:5263)
+</failure>
+  </testcase>
   <system-out><![CDATA[EMMA: collecting runtime coverage data ...
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
