@@ -33,10 +33,9 @@ public class PullUpMethodTest extends Test {
 		 
 		JDolly jdolly = new JDollyImp("jdolly-0.4/alloyTheory/pullupmethod_final.als",2, 3, 4);
 		jdolly.setExactMaxPackages(true);
-		jdolly.setMaxClassNames(3);
-		jdolly.setExactMaxClassNames(true);
 		jdolly.setMaxMethodNames(3);
 		jdolly.setExactMaxMethodNames(true);
+		
 //		jdolly.setOptimized(isOptimized());
 //		jdolly.setJump(getJumpInterval());
 		return jdolly; 
