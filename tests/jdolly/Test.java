@@ -96,9 +96,9 @@ public abstract class Test {
 		Program target = null;
 
 		for (List<org.eclipse.jdt.core.dom.CompilationUnit> classes : getCUGen()) {
-			// i++;
-			// if (i < 400)
-			// continue;
+			i++;
+			if (i != 15615)
+				continue;
 
 			List<RawCU> compilationUnits = getCompilationUnits(classes);
 
@@ -157,7 +157,7 @@ public abstract class Test {
 
 					if (checkBehaviorConditions(inDir.toString(),
 							outDir.toString())) {
-//						logger.logCoverage();
+						// logger.logCoverage();
 						String fileLog = outDir + FILE_SEPARATOR
 								+ BEHAVIORAL_CHANGE;
 						FileUtil.gravaArquivo(fileLog, BEHAVIORAL_CHANGE);
@@ -515,7 +515,7 @@ public abstract class Test {
 
 		Parameters parameters = new Parameters();
 		parameters.setTimeLimit(1);
-//		parameters.setCheckCoverage(true);
+		// parameters.setCheckCoverage(true);
 		result = new SafeRefactor(source, target, parameters);
 
 		return result;
@@ -592,6 +592,36 @@ public abstract class Test {
 		//
 		// // Saferefactor sr = new Saferefactor(in, out, "", "", "");
 		// // return !sr.isRefactoring("1",true);
+	}
+
+	public static void main(String[] args) {
+		Test test = new Test() {
+
+			@Override
+			protected IGenerator<List<CompilationUnit>> getCUGen() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			protected Program refactoring(Program program)
+					throws RefactoringException {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+		};
+
+		try {
+			System.out.println("Inicio");
+			boolean checkBehaviorConditions = test.checkBehaviorConditions(
+					"/Users/gustavoas/workspaces/csmr2012/source/bin",
+					"/Users/gustavoas/workspaces/csmr2012/target/bin");
+			System.out.println("Refactoring? " + !checkBehaviorConditions);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

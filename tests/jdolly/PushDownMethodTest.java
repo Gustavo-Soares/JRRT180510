@@ -33,7 +33,7 @@ public class PushDownMethodTest extends Test {
 	protected JDolly getCUGen() {		
 		JDolly jdolly = new JDollyImp("jdolly-0.4/alloyTheory/pushdownmethod_final.als",2, 3, 4);
 		jdolly.setExactMaxPackages(true);
-		jdolly.setMaxClassNames(3);
+//		jdolly.setMaxClassNames(3);
 //		jdolly.setExactMaxClassNames(true);
 		jdolly.setMaxMethodNames(3);
 		jdolly.setExactMaxMethodNames(true);
