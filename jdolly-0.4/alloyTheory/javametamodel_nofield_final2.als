@@ -179,7 +179,7 @@ pred isSimpleValueBody[m:Method] {
 }
 
 pred someOverloading[i1:Int,i2:Int] {
-one disj m1,m2:Method | m1.id = m2.id && #m1.param = i1 && #m2.param = i2 && m1.param != m2.param && m1.param + m2.param !in Class && m1.b + m2.b in LiteralValue && sameHierarchy[m1,m2]
+some disj m1,m2:Method | m1.id = m2.id && #m1.param = i1 && #m2.param = i2 && m1.param != m2.param && m1.param + m2.param !in Class && m1.b + m2.b in LiteralValue && sameHierarchy[m1,m2]
 }
 
 pred sameHierarchy[m1,m2:Method] {

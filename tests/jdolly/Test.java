@@ -97,9 +97,7 @@ public abstract class Test {
 
 		for (List<org.eclipse.jdt.core.dom.CompilationUnit> classes : getCUGen()) {
 			i++;
-			if (i != 15615)
-				continue;
-
+		
 			List<RawCU> compilationUnits = getCompilationUnits(classes);
 
 			RawCU[] rawCUs = new RawCU[compilationUnits.size()];

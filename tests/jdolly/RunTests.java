@@ -9,14 +9,14 @@ import org.apache.tools.ant.ProjectHelper;
 public class RunTests {
 	public static void main(String[] args) {
 	
-		new PushDownMethodTest().run();
+//		new PushDownMethodTest().run();
 //		new EncapsulateFieldTest().run();
 //		clean();	
 //		new AddParameterTest().run();
 //		clean();
 //		new MoveMethodTest().run();
 //		clean();
-//		new PullUpMethodTest().run();
+		new PullUpMethodTest().run();
 //		clean();
 //		new RenameTypeTest().run();
 //		clean();

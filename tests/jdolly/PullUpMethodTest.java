@@ -11,7 +11,7 @@ import AST.TypeDecl;
 public class PullUpMethodTest extends Test {
 
 	private static final String methodTarget = "m_0";
-	private static final String classTarget = "ClassId_0";
+	private static final String classTarget = "C1_0";
 
 	
 
